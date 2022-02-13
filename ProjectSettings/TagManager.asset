@@ -51,3 +51,6 @@ TagManager:
   - name: Entity
     uniqueID: 2823280847
     locked: 0
+  - name: Entity Overlap
+    uniqueID: 3825811597
+    locked: 0
