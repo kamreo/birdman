@@ -14,8 +14,8 @@ TagManager:
   - UI
   - Blocking
   - Entity
+  - Player
   - Floor
-  - 
   - 
   - 
   - 
@@ -50,6 +50,9 @@ TagManager:
     locked: 0
   - name: Entity
     uniqueID: 2823280847
+    locked: 0
+  - name: Player
+    uniqueID: 413179931
     locked: 0
   - name: Entity Overlap
     uniqueID: 3825811597
