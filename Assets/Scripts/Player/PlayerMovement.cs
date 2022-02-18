@@ -42,8 +42,8 @@ public class PlayerMovement : MonoBehaviour
 	private void UpdateSprite()
 	{
 		if (move.x > 0)
-			transform.localScale = new Vector3(1, 1, 0);
-		if (move.x < 0)
 			transform.localScale = new Vector3(-1, 1, 0);
+		if (move.x < 0)
+			transform.localScale = new Vector3(1, 1, 0);
 	}
 }
