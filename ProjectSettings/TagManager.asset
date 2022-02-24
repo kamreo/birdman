@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Blockade
+  - PickableItem
+  - PickableItemFrame
+  - Inventory
   layers:
   - Default
   - TransparentFX
@@ -16,8 +19,8 @@ TagManager:
   - Entity
   - Player
   - Floor
-  - 
-  - 
+  - ItemsUI
+  - Pickable
   - 
   - 
   - 
@@ -48,11 +51,14 @@ TagManager:
   - name: Objects
     uniqueID: 2936710819
     locked: 0
-  - name: Entity
-    uniqueID: 2823280847
+  - name: Items
+    uniqueID: 2383050439
     locked: 0
   - name: Player
     uniqueID: 413179931
+    locked: 0
+  - name: Entity
+    uniqueID: 2823280847
     locked: 0
   - name: Entity Overlap
     uniqueID: 3825811597

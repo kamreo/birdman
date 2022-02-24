@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa09c0e58f1b90d4eb6fa06df2f38f12, type: 3}
+  m_Name: Physical Damage
+  m_EditorClassIdentifier: 
+  name: Physical Damage
+  rangeTierValues:
+  - minMinimalValue: 20
+    maxMininimalValue: 29
+    minMaximalValue: 30
+    maxMaximalValue: 40
+  - minMinimalValue: 40
+    maxMininimalValue: 59
+    minMaximalValue: 60
+    maxMaximalValue: 79
+  - minMinimalValue: 80
+    maxMininimalValue: 99
+    minMaximalValue: 100
+    maxMaximalValue: 129
+  - minMinimalValue: 130
+    maxMininimalValue: 149
+    minMaximalValue: 150
+    maxMaximalValue: 169
+  - minMinimalValue: 170
+    maxMininimalValue: 199
+    minMaximalValue: 200
+    maxMaximalValue: 229
+  - minMinimalValue: 230
+    maxMininimalValue: 269
+    minMaximalValue: 270
+    maxMaximalValue: 300

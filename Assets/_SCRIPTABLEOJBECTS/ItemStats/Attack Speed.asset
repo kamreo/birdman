@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 494f898fe1cd2e74dbbd7da1df948012, type: 3}
+  m_Name: Attack Speed
+  m_EditorClassIdentifier: 
+  name: Attack Speed
+  tier: 0
+  intTierValues:
+  - minValue: 50
+    maxValue: 60
+  - minValue: 61
+    maxValue: 74
+  - minValue: 75
+    maxValue: 89
+  - minValue: 90
+    maxValue: 119
+  - minValue: 120
+    maxValue: 159
+  - minValue: 160
+    maxValue: 200
+  statValue: 52
