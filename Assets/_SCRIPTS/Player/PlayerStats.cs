@@ -6,7 +6,6 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats, ICombatStats
 {
 	private const int fixedUpdateRate = 50;         // Value needed to correctly apply regeneration
 													//[SerializeField] SceneChanger sceneChanger;     // Calls "LoadGameOver" scene when player die
-
 	[Header("God mode")]
 	[SerializeField] bool unlimitedHP;              // Give player max health every update
 	[SerializeField] bool unlimitedMP;              // Give player max mana every update

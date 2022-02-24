@@ -30,7 +30,6 @@ public static class Pathfinding
         if (toX < 0 || toY < 0 || toX >= grid.GetLength(0) || toY >= grid.GetLength(1))
             return null;
 
-        return null;
         PathfindingNode fromNode = grid[from.x - offset.x, from.y - offset.y];
         PathfindingNode toNode = grid[toX, toY];
 
