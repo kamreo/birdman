@@ -275,6 +275,17 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats, ICombatStats
 
 	public Stat CritMultiplier => throw new System.NotImplementedException();
 
+	Stat ICombatStats.MagicDefense { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+	Stat ICombatStats.Evasion { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+	Stat ICombatStats.MinDamage { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+	Stat ICombatStats.MaxDamage { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+	Stat ICombatStats.AttackSpeed { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+	Stat ICombatStats.CritChance { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+	Stat ICombatStats.CritMultiplier { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+	Stat IPlayerStats.Dexterity { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+	Stat IPlayerStats.Intelligence { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+	Stat IPlayerStats.Strength { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
 	#endregion
 
 	#region Passives

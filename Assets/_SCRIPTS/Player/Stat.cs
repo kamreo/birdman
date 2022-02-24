@@ -13,7 +13,7 @@ public struct Stat
 	public float CalculatedValue { get => calculatedValue; set => calculatedValue = value; }
 	public float BaseValue
 	{
-		private get => baseValue;
+		get => baseValue;
 		set
 		{
 			if (value > 0)
