@@ -86,6 +86,11 @@ public class EnemyStats : MonoBehaviour, IBaseStats, ICombatStats, ICombatMethod
         get => throw new System.NotImplementedException();
         set => throw new System.NotImplementedException();
     }
+    public Stat AttackRange
+    {
+        get => throw new System.NotImplementedException();
+        set => throw new System.NotImplementedException();
+    }
 
     public void ModifyDamageStat(ItemStatSORange itemStat)
     {

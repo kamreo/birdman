@@ -284,26 +284,31 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats, ICombatStats
 	Stat IPlayerStats.Dexterity { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 	Stat IPlayerStats.Intelligence { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 	Stat IPlayerStats.Strength { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    public Stat AttackRange
+    {
+        get => throw new System.NotImplementedException();
+        set => throw new System.NotImplementedException();
+    }
 
-	#endregion
+    #endregion
 
-	#region Passives
-	//[Header("Passives")]
-	//public List<int> PassiveIds;
+    #region Passives
+    //[Header("Passives")]
+    //public List<int> PassiveIds;
 
-	#endregion
+    #endregion
 
-	#region Material and colors
-	//[Header("Material and colors")]
-	//[SerializeField] Material spriteMaterial;
-	//[SerializeField] Color takeDamageTint;
-	//Color currentTint;
-	//[SerializeField] float tintFadeSpeed;
+    #region Material and colors
+    //[Header("Material and colors")]
+    //[SerializeField] Material spriteMaterial;
+    //[SerializeField] Color takeDamageTint;
+    //Color currentTint;
+    //[SerializeField] float tintFadeSpeed;
 
-	#endregion
+    #endregion
 
-	#region Methods
-	void UpdateStats()
+    #region Methods
+    void UpdateStats()
 	{
 		Level++;
 		SpellPoints++;
@@ -520,7 +525,7 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats, ICombatStats
 	{
 		throw new System.NotImplementedException();
 	}
-
+	
 	public void ModifyDamageStat(ItemStatSORange itemStat)
 	{
 		throw new System.NotImplementedException();
@@ -533,6 +538,6 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats, ICombatStats
 
 	public void TakeDamage(float damageTaken, string damageType)
 	{
-		throw new System.NotImplementedException();
+		Debug.Log("Player hit!");
 	}
 }
