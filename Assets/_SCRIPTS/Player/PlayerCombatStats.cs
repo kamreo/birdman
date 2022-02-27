@@ -68,6 +68,7 @@ public class PlayerCombatStats : MonoBehaviour, ICombatStats, ICombatMethods
 	[SerializeField]
 	private Stat blockDamage;
 	public Stat BlockDamage { get => blockDamage; set => blockDamage = value; }
+	public Stat AttackRange { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
 	public void TakeDamage(float damageTaken)
 	{
