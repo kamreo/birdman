@@ -134,7 +134,7 @@ public class InventoryController : MonoBehaviour
 
 		if (selectedItem != null)
 		{
-			bool canShow = selectedItemGrid.ItemBoundaryCheck(positionOnGrid, selectedItem.itemData.size);
+			bool canShow = selectedItemGrid.CheckItemBoundary(positionOnGrid, selectedItem.itemData.size);
 			inventoryHighlighter.Show(canShow);
 			inventoryItemDescription.Show(false);
 
@@ -145,6 +145,7 @@ public class InventoryController : MonoBehaviour
 				if (!itemToHighlight.itemData.GetType().Equals(typeof(ItemDataEquipable)))
 				{
 					inventoryHighlighter.Show(false);
+					return;
 				}
 
 				if (!(selectedItemGrid as EquipmentSlot).AvailableItemTypes.Contains((itemToHighlight.itemData as ItemDataEquipable).SlotType))

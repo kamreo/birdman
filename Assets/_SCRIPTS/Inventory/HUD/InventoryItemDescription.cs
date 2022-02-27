@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -108,11 +107,12 @@ public class InventoryItemDescription : MonoBehaviour
 		ItemDataEquipable equipable = (ItemDataEquipable)itemData;
 
 		SetBaseStats(equipable.BaseStats);
-		baseStatText.gameObject.SetActive(false);
+		baseStatText.SetActive(false);
 
 		SetRequierements(equipable);
-		baseStatsHeight += requierementsText.transform.parent.GetComponent<RectTransform>().sizeDelta.y;
-		itemDescriptionHeight += requierementsText.transform.parent.GetComponent<RectTransform>().sizeDelta.y;
+		float addedHeight = requierementsText.transform.parent.GetComponent<RectTransform>().sizeDelta.y;
+		baseStatsHeight += addedHeight;
+		itemDescriptionHeight += addedHeight;
 
 		RectTransform baseStatsRect = baseStats.GetComponent<RectTransform>();
 		baseStatsRect.sizeDelta = new Vector2(baseStatsRect.sizeDelta.x, baseStatsHeight);
@@ -124,7 +124,7 @@ public class InventoryItemDescription : MonoBehaviour
 
 		ClearAdditionalStats();
 		SetAdditionalStats(equipable.AdditionalStats);
-		additionalStatText.gameObject.SetActive(false);
+		additionalStatText.SetActive(false);
 
 
 		RectTransform additionalRect = additionalStats.GetComponent<RectTransform>();
@@ -164,24 +164,24 @@ public class InventoryItemDescription : MonoBehaviour
 	private void SetRequierements(ItemDataEquipable itemData)
 	{
 		// requiers level <color=#EA0000>x</color>, a dex, b int, <color=#EA0000> c </color> str
-		int reqLevel = (int)itemData.Requierements.Where(i => i.Name.Equals("Level")).First().Value;
+		int reqLevel = itemData.Requierements.Find(i => i.Name.Equals("Level")).Value;
 		string level = reqLevel <= playerStats.Level ? reqLevel.ToString() : $"<color=#EA0000>{reqLevel}</color>";
 
-		int reqDex = (int)itemData.Requierements.Where(i => i.Name.Equals("Dex")).First().Value;
+		int reqDex = itemData.Requierements.Find(i => i.Name.Equals("Dex")).Value;
 		string dex = "";
 		if (reqDex > 0)
-			dex = reqDex <= playerStats.Dexterity.CalculatedValue ? reqDex.ToString() : $", <color=#EA0000>{reqDex}</color> dex";
+			dex = reqDex <= playerStats.Dexterity.CalculatedValue ? $", {reqDex} dex" : $", <color=#EA0000>{reqDex}</color> dex";
 
 
-		int reqInt = (int)itemData.Requierements.Where(i => i.Name.Equals("Int")).First().Value;
+		int reqInt = itemData.Requierements.Find(i => i.Name.Equals("Int")).Value;
 		string intel = "";
 		if (reqInt > 0)
-			intel = reqInt <= playerStats.Intelligence.CalculatedValue ? reqInt.ToString() : $", <color=#EA0000>{reqInt}</color> int";
+			intel = reqInt <= playerStats.Intelligence.CalculatedValue ? $", {reqInt} int" : $", <color=#EA0000>{reqInt}</color> int";
 
-		int reqStr = (int)itemData.Requierements.Where(i => i.Name.Equals("Str")).First().Value;
+		int reqStr = itemData.Requierements.Find(i => i.Name.Equals("Str")).Value;
 		string str = "";
 		if (reqStr > 0)
-			str = reqStr <= playerStats.Strength.CalculatedValue ? reqStr.ToString() : $", <color=#EA0000>{reqStr}</color> str";
+			str = reqStr <= playerStats.Strength.CalculatedValue ? $", {reqStr} str" : $", <color=#EA0000>{reqStr}</color> str";
 
 		string requierements = $"requiers level {level}{dex}{intel}{str}";
 
@@ -190,6 +190,7 @@ public class InventoryItemDescription : MonoBehaviour
 
 	private void SetBaseStats(ItemStatSO[] itemStats)
 	{
+		bool physDamageSet = false;
 		float padding = 0;
 		itemDescriptionHeight += padding;
 		baseStatsHeight += padding;
@@ -210,36 +211,42 @@ public class InventoryItemDescription : MonoBehaviour
 
 			TMP_Text currentStatText = currentStatObject.GetComponent<TMP_Text>();
 
-
-			string textToSet = $"{itemStats[i].Name}: <color=#4281FF> {CreateStatValueText(itemStats[i])} </color>";
+			string textToSet = "Stat Text";
+			if (!physDamageSet && (itemStats[i].Name.Equals("Minimial Physical Damage") || itemStats[i].Name.Equals("Maximal Physical Damage")))
+			{
+				physDamageSet = true;
+				ItemStatSO min = itemStats.Where(s => s.Name.Equals("Minimal Physical Damage")).First();
+				ItemStatSO max = itemStats.Where(s => s.Name.Equals("Maximal Physical Damage")).First();
+				textToSet = CreateRangeValueText(min, max);
+			}
+			else
+			{
+				textToSet = CreateStatValueText(itemStats[i]);
+			}
 			TrySetText(currentStatText, textToSet);
 
 			itemDescriptionHeight += rect.sizeDelta.y;
 			baseStatsHeight += rect.sizeDelta.y;
 		}
+
+
+
 	}
 
 	private string CreateStatValueText(ItemStatSO itemStat)
 	{
-
-		string value = "ERR";
-		Type statType = itemStat.GetType();
-
-		if (statType.Equals(typeof(ItemStatSOInt)) || statType.Equals(typeof(ItemStatSOFloat)))
-		{
-			value = itemStat.GetIntValue().ToString();
-		}
-		if (statType.Equals(typeof(ItemStatSORange)))
-		{
-			value = $"{itemStat.GetRangeValue().Item1 - itemStat.GetRangeValue().Item2}";
-		}
+		string value = $"{itemStat.Value}";
 
 		if (itemStat.Name.Contains("Chance"))
 		{
 			value += "%";
 		}
+		return $"{itemStat.Name}: <color=#4281FF> {value} </color>";
+	}
 
-		return value;
+	private string CreateRangeValueText(ItemStatSO minimalStat, ItemStatSO maximalStat)
+	{
+		return $"Physical damage: <color=#4281FF> {minimalStat.Value} - {maximalStat.Value} </color>";
 	}
 
 	private void SetAdditionalStats(ItemStatSO[] itemStats)
@@ -260,7 +267,7 @@ public class InventoryItemDescription : MonoBehaviour
 
 			TMP_Text currentStatText = currentStatObject.GetComponent<TMP_Text>();
 
-			string textToSet = $"+ {CreateStatValueText(itemStats[i])} to {itemStats[i].Name}";
+			string textToSet = $"+ {itemStats[i].Value} to {itemStats[i].Name}";
 			TrySetText(currentStatText, textToSet);
 
 			itemDescriptionHeight += rect.sizeDelta.y;

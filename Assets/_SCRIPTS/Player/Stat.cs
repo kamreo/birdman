@@ -2,8 +2,9 @@
 using UnityEngine;
 
 [Serializable]
-public struct Stat
+public class Stat
 {
+	[SerializeField] private bool isInteger = true;
 	[SerializeField] private float calculatedValue;     // It is base value after implications = (baseValue + flatIncome) * (1f + percentIncome / 100f)
 														// Changing value in below variables runs CalculateValue() function
 	[SerializeField] private float baseValue;           // Starting stat value 
@@ -49,7 +50,7 @@ public struct Stat
 	}
 
 
-	public Stat(float baseValue, float flatIncome, float percentIncome) : this()
+	public Stat(float baseValue, float flatIncome, float percentIncome)
 	{
 		BaseValue = baseValue;
 		FlatIncome = flatIncome;
@@ -57,10 +58,28 @@ public struct Stat
 		CalculateValue();
 	}
 
-	public Stat(float baseValue) : this()
+	public Stat(Stat copyStat)
+	{
+		BaseValue = copyStat.BaseValue;
+		FlatIncome = copyStat.FlatIncome;
+		PercentIncome = copyStat.PercentIncome;
+		CalculateValue();
+	}
+
+	public Stat()
+	{
+		CalculateValue();
+	}
+
+	public Stat(float baseValue)
 	{
 		BaseValue = baseValue;
 		CalculateValue();
+	}
+
+	public static Stat CreateFlatIncomeStat(float flatIncome)
+	{
+		return new Stat(0f, flatIncome, 0f);
 	}
 
 	public static Stat operator +(Stat baseStat, Stat add)
@@ -89,6 +108,14 @@ public struct Stat
 
 	public void CalculateValue()
 	{
-		CalculatedValue = (BaseValue + FlatIncome) * (1 + PercentIncome / 100f);
+		if (isInteger)
+			CalculatedValue = (int)((BaseValue + FlatIncome) * (1 + PercentIncome / 100f));
+		else
+			CalculatedValue = (BaseValue + FlatIncome) * (1 + PercentIncome / 100f);
+	}
+
+	public int GetIntValue()
+	{
+		return (int)CalculatedValue;
 	}
 }

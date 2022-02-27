@@ -1,13 +1,21 @@
+using UnityEngine;
+
 public interface IBaseStats
 {
-	public Stat Health { get; set; }
+	[SerializeField]
+	public int Level { get; set; }
+
+	[SerializeField]
+	public Stat MaxHealth { get; set; }
+	[SerializeField]
 	public float CurrentHealth { get; set; }
+	[SerializeField]
 	public Stat RegenHealth { get; set; }
 
-	public Stat Mana { get; set; }
+	[SerializeField]
+	public Stat MaxMana { get; set; }
+	[SerializeField]
 	public float CurrentMana { get; set; }
+	[SerializeField]
 	public Stat RegenMana { get; set; }
-
-	public float Speed { get; set; }
-	public float SprintMultiplier { get; set; }
 }

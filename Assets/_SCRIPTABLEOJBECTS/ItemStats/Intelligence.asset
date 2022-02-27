@@ -9,22 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 494f898fe1cd2e74dbbd7da1df948012, type: 3}
+  m_Script: {fileID: 11500000, guid: fa73b78ee9cc21c4fb6d5e2b83ed8c21, type: 3}
   m_Name: Intelligence
   m_EditorClassIdentifier: 
   name: Intelligence
   tier: 0
-  intTierValues:
-  - minValue: 5
-    maxValue: 9
-  - minValue: 10
-    maxValue: 19
-  - minValue: 20
-    maxValue: 29
-  - minValue: 30
-    maxValue: 39
-  - minValue: 40
-    maxValue: 45
-  - minValue: 46
-    maxValue: 50
-  statValue: 8
+  tierValues:
+  - minValue: 0
+    maxValue: 0
+  - minValue: 0
+    maxValue: 0
+  - minValue: 0
+    maxValue: 0
+  - minValue: 0
+    maxValue: 0
+  - minValue: 0
+    maxValue: 0
+  - minValue: 0
+    maxValue: 0
+  value: 0

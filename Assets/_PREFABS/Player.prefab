@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 906054260}
   - component: {fileID: 906054258}
   - component: {fileID: 906054257}
-  - component: {fileID: 2172972171000797262}
   - component: {fileID: 2172972171000797250}
   m_Layer: 8
   m_Name: Player
@@ -112,19 +111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d13171cdc66704a4a99458ebefa3d288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2172972171000797262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7146123870283170433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b51ba7a5c798284dbba0fd895aea0ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventoryTab: {fileID: 0}
 --- !u!114 &2172972171000797250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,3 +124,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  attackPoint: {fileID: 0}
+  attackRange: 0.5
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 0

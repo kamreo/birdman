@@ -1,8 +1,5 @@
-﻿using UnityEngine;
-
-public interface ICombatStats
+﻿public interface ICombatStats
 {
-	[SerializeField]
 	public Stat Armor { get; set; }
 	public Stat MagicDefense { get; set; }
 	public Stat Evasion { get; set; }
@@ -13,11 +10,6 @@ public interface ICombatStats
 	public Stat CritChance { get; set; }
 	public Stat CritMultiplier { get; set; }
 
-
-	public void ModifyStat(ItemStatSO itemStat);
-	public void ModifyFloatStat(string statName, float value);
-	public void ModifyIntStat(string statName, int value);
-
-	public void ModifyDamageStat(ItemStatSORange itemStat);
-	public void ModifyDamageStat(float minDamage, float maxDamage);
+	public Stat BlockChance { get; set; }
+	public Stat BlockDamage { get; set; }
 }

@@ -20,29 +20,35 @@ MonoBehaviour:
   size: {x: 2, y: 4}
   canBeDropped: 1
   slotType: 1
-  requierements:
+  requierementsEditor:
   - name: Level
     minValue: 1
-    maxValue: 1
+    maxValue: 4
+    value: 0
   - name: Dex
-    minValue: 0
-    maxValue: 5
+    minValue: 1
+    maxValue: 10
+    value: 0
   - name: Int
-    minValue: 0
-    maxValue: 5
+    minValue: 1
+    maxValue: 10
+    value: 0
   - name: Str
-    minValue: 0
-    maxValue: 5
+    minValue: 1
+    maxValue: 10
+    value: 0
   baseStats:
   - {fileID: 11400000, guid: 2ceed863a8a49544498836e1fe426558, type: 2}
-  - {fileID: 11400000, guid: 131ad5c8b6d17b54790f79de75caaca8, type: 2}
-  - {fileID: 11400000, guid: eeb20b27fa8a4324584c70019426dd13, type: 2}
+  - {fileID: 11400000, guid: c57c9cc39cac1e845972d79cddd88e7f, type: 2}
+  - {fileID: 11400000, guid: 73dab1e0b7c1f80498fd649b00ebf298, type: 2}
   additionalStatsCount:
     minValue: 0
-    maxValue: 2
+    maxValue: 3
   additionalStatsEditor:
   - {fileID: 11400000, guid: 2a3a534db7e19ff4e88738c3f4bbe071, type: 2}
   - {fileID: 11400000, guid: 3474dd660ad99474385011082ad4ba9e, type: 2}
   - {fileID: 11400000, guid: 15fc45d038ee14741985b74684dc0054, type: 2}
   - {fileID: 11400000, guid: 1834ba5b47b596e4b99347f6068a3641, type: 2}
   - {fileID: 11400000, guid: aaf5f48ceab3a29499fe657a19465b4d, type: 2}
+  - {fileID: 11400000, guid: 2ceed863a8a49544498836e1fe426558, type: 2}
+  - {fileID: 11400000, guid: 0acd631e04f85e34a82026be9ec9f197, type: 2}

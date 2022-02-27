@@ -13,14 +13,15 @@ public class ItemDataEquipable : ItemData
 	public int ItemLevel { get => itemLevel; }
 
 	[SerializeField]
+	private List<Requierement> requierementsEditor;
 	private List<Requierement> requierements;
-	public List<Requierement> Requierements { get => requierements; }
+	public List<Requierement> Requierements { get => requierements; private set => requierements = value; }
 
 	[SerializeField]
 	private ItemStatSO[] baseStats;
 	public ItemStatSO[] BaseStats { get => baseStats; }
 
-	public ItemStatInt additionalStatsCount;
+	public ItemStat additionalStatsCount;
 
 	[SerializeField]
 	private List<ItemStatSO> additionalStatsEditor;
@@ -30,9 +31,10 @@ public class ItemDataEquipable : ItemData
 
 	private new void OnEnable()
 	{
-		foreach (var item in requierements)
+		requierements = new List<Requierement>();
+		foreach (var item in requierementsEditor)
 		{
-			item.Init();
+			requierements.Add(new Requierement(item));
 		}
 
 		foreach (var item in baseStats)

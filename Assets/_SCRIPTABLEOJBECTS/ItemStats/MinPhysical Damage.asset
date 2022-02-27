@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa73b78ee9cc21c4fb6d5e2b83ed8c21, type: 3}
-  m_Name: Evasion
+  m_Name: MinPhysical Damage
   m_EditorClassIdentifier: 
-  name: Evasion
+  name: Minimal Physical Damage
   tier: 0
   tierValues:
   - minValue: 0

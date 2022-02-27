@@ -20,19 +20,23 @@ MonoBehaviour:
   size: {x: 2, y: 3}
   canBeDropped: 1
   slotType: 6
-  requierements:
+  requierementsEditor:
   - name: Level
     minValue: 1
-    maxValue: 1
+    maxValue: 4
+    value: 0
   - name: Dex
-    minValue: 0
-    maxValue: 5
+    minValue: 1
+    maxValue: 10
+    value: 0
   - name: Int
-    minValue: 0
-    maxValue: 5
+    minValue: 1
+    maxValue: 10
+    value: 0
   - name: Str
-    minValue: 0
-    maxValue: 5
+    minValue: 1
+    maxValue: 10
+    value: 0
   baseStats:
   - {fileID: 11400000, guid: 98df35efb9f32b546846b21fb6294c52, type: 2}
   - {fileID: 11400000, guid: 30b0004ed4a4638418529ef1b927b3ef, type: 2}

@@ -4,6 +4,7 @@ using UnityEngine;
 public class EquipmentSlot : ItemGrid
 {
 	InventoryGridItem inventoryItemSlot;
+
 	public InventoryGridItem InventoryItemSlot { get => inventoryItemSlot; }
 
 	bool isWeaponSlot = false;
@@ -17,6 +18,9 @@ public class EquipmentSlot : ItemGrid
 	}
 	List<EquipmentSlotType> originalAvailableItemTypes;
 
+	private EquipmentStatsController equipmentStatsController;
+	private PlayerStats playerStats;
+
 	private void Start()
 	{
 		originalAvailableItemTypes = new List<EquipmentSlotType>(availableItemTypes);
@@ -26,6 +30,9 @@ public class EquipmentSlot : ItemGrid
 
 		if (GetComponent<WeaponEquipmentSlot>() != null)
 			isWeaponSlot = true;
+
+		equipmentStatsController = FindObjectOfType<EquipmentStatsController>();
+		playerStats = FindObjectOfType<PlayerStats>();
 	}
 
 	protected override void InitInvetoryItemSlot(Vector2Int gridSize)
@@ -54,6 +61,8 @@ public class EquipmentSlot : ItemGrid
 		{
 			return null;
 		}
+
+		equipmentStatsController.PickUpItemApplyStatsChange(returnItem.itemData);
 
 		CleanGridReference(returnItem);
 
@@ -94,7 +103,13 @@ public class EquipmentSlot : ItemGrid
 			}
 		}
 
-		if (!OverlapCheck(itemPosition, item.itemData.size, ref overlapItem))
+		if (!CheckRequierements(item.itemData))
+		{
+			return false;
+		}
+
+
+		if (!CheckOverlap(itemPosition, item.itemData.size, ref overlapItem))
 		{
 			overlapItem = null;
 			return false;
@@ -102,12 +117,43 @@ public class EquipmentSlot : ItemGrid
 
 		if (overlapItem != null)
 		{
+			equipmentStatsController.PickUpItemApplyStatsChange(overlapItem.itemData);
 			CleanGridReference(overlapItem);
 		}
 
 		PlaceItemInInventorySlot(item, itemPosition);
 		if (isWeaponSlot)
 			GetComponent<WeaponEquipmentSlot>().SetAvailableTypesInArms();
+
+		equipmentStatsController.PlacedItemApplyStatsChange(item.itemData);
+
+		return true;
+	}
+
+	private bool CheckRequierements(ItemData itemData)
+	{
+		if (!itemData.GetType().Equals(typeof(ItemDataEquipable)))
+			return false;
+
+		ItemDataEquipable equipable = (ItemDataEquipable)itemData;
+		List<Requierement> requierementList = equipable.Requierements;
+
+		int minLvl = requierementList.Find(r => r.Name == "Level").Value;
+		int minDex = requierementList.Find(r => r.Name == "Dex").Value;
+		int minInt = requierementList.Find(r => r.Name == "Int").Value;
+		int minStr = requierementList.Find(r => r.Name == "Str").Value;
+
+		if (playerStats.Level < minLvl)
+			return false;
+
+		if (playerStats.Dexterity.CalculatedValue < minDex)
+			return false;
+
+		if (playerStats.Intelligence.CalculatedValue < minInt)
+			return false;
+
+		if (playerStats.Strength.CalculatedValue < minStr)
+			return false;
 
 		return true;
 	}
@@ -153,7 +199,7 @@ public class EquipmentSlot : ItemGrid
 		return true;
 	}
 
-	protected override bool OverlapCheck(Vector2Int position, Vector2Int size, ref InventoryGridItem overlapItem)
+	protected override bool CheckOverlap(Vector2Int position, Vector2Int size, ref InventoryGridItem overlapItem)
 	{
 		if (inventoryItemSlot != null)
 		{

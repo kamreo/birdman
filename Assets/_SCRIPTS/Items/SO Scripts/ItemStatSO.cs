@@ -1,10 +1,11 @@
 using UnityEngine;
 
 [System.Serializable]
-public abstract class ItemStatSO : ScriptableObject
+[CreateAssetMenu(fileName = "New Item Stat", menuName = "Inventory/Item Stat")]
+public class ItemStatSO : ScriptableObject
 {
 	[SerializeField]
-	protected new string name;
+	private new string name;
 	public string Name { get => name; }
 
 	[SerializeField]
@@ -24,29 +25,25 @@ public abstract class ItemStatSO : ScriptableObject
 		}
 	}
 
-	public virtual void RandValue(int itemLevel)
-	{
-	}
+	[SerializeField]
+	private ItemStat[] tierValues;
 
-	public virtual int GetIntValue()
-	{
-		return -1;
-	}
-
-	public virtual float GetFloatValue()
-	{
-		return -1.0f;
-	}
-
-	public virtual (int, int) GetRangeValue()
-	{
-		return (-1, -1);
-	}
+	[SerializeField]
+	private int value = -1;
+	public int Value { get => value; }
 
 	public ItemStatSO(ItemStatSO itemStatSO)
 	{
 		name = itemStatSO.Name;
 		tier = itemStatSO.Tier;
+		tierValues = itemStatSO.tierValues;
+		value = itemStatSO.value;
+	}
+
+	public void RandValue(int itemLevel)
+	{
+		Tier = Random.Range(itemLevel / 10 - 3, itemLevel / 10 + 1);
+		value = Random.Range(tierValues[tier].MinValue, tierValues[tier].MaxValue);
 	}
 }
 

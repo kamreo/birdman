@@ -3,7 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(EntityMovement))]
 public class PlayerMovement : MonoBehaviour
 {
-	private PlayerStats stats;
 	private EntityMovement entityMovement;
 	private bool sprint = false;
 	private Vector2 move = Vector2.zero;
@@ -11,10 +10,6 @@ public class PlayerMovement : MonoBehaviour
 	private void OnEnable()
 	{
 		entityMovement = GetComponent<EntityMovement>();
-		stats = GetComponent<PlayerStats>();
-
-		entityMovement.MoveSpeed = stats.Speed;
-		entityMovement.SprintMultiplier = stats.SprintMultiplier;
 	}
 
 	private void Update()

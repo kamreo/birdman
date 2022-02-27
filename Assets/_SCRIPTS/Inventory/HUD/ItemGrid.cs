@@ -85,12 +85,12 @@ public class ItemGrid : MonoBehaviour
 
 	public virtual bool PlaceItem(InventoryGridItem item, Vector2Int itemPosition, ref InventoryGridItem overlapItem)
 	{
-		if (!ItemBoundaryCheck(itemPosition, item.itemData.size))
+		if (!CheckItemBoundary(itemPosition, item.itemData.size))
 		{
 			return false;
 		}
 
-		if (!OverlapCheck(itemPosition, item.itemData.size, ref overlapItem))
+		if (!CheckOverlap(itemPosition, item.itemData.size, ref overlapItem))
 		{
 			overlapItem = null;
 			return false;
@@ -172,7 +172,7 @@ public class ItemGrid : MonoBehaviour
 		return true;
 	}
 
-	protected virtual bool OverlapCheck(Vector2Int position, Vector2Int size, ref InventoryGridItem overlapItem)
+	protected virtual bool CheckOverlap(Vector2Int position, Vector2Int size, ref InventoryGridItem overlapItem)
 	{
 		for (int i = 0; i < size.x; i++)
 		{
@@ -210,7 +210,7 @@ public class ItemGrid : MonoBehaviour
 		return false;
 	}
 
-	protected virtual bool PositionCheck(Vector2Int position)
+	protected virtual bool CheckPosition(Vector2Int position)
 	{
 		if (position.x < 0 || position.y < 0)
 			return false;
@@ -221,16 +221,16 @@ public class ItemGrid : MonoBehaviour
 		return true;
 	}
 
-	public virtual bool ItemBoundaryCheck(Vector2Int position, Vector2Int size)
+	public virtual bool CheckItemBoundary(Vector2Int position, Vector2Int size)
 	{
-		if (!PositionCheck(position))
+		if (!CheckPosition(position))
 			return false;
 
 		position.x += size.x - 1;
 		position.y += size.y - 1;
 
 
-		if (!PositionCheck(position))
+		if (!CheckPosition(position))
 			return false;
 
 		return true;

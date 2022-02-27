@@ -9,20 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dccb93c9bb7efb4a9b2511beea6b31a, type: 3}
+  m_Script: {fileID: 11500000, guid: fa73b78ee9cc21c4fb6d5e2b83ed8c21, type: 3}
   m_Name: Crit Chance
   m_EditorClassIdentifier: 
-  name: Crit Chance
-  floatTierValues:
-  - minValue: 0.1
-    maxValue: 0.5
-  - minValue: 0.6
-    maxValue: 1.5
-  - minValue: 1.6
-    maxValue: 2.6
-  - minValue: 2.7
-    maxValue: 3.9
-  - minValue: 4
-    maxValue: 6
-  - minValue: 6.1
-    maxValue: 9
+  name: Crit Multiplier
+  tier: 0
+  tierValues:
+  - minValue: 0
+    maxValue: 0
+  - minValue: 0
+    maxValue: 0
+  - minValue: 0
+    maxValue: 0
+  - minValue: 0
+    maxValue: 0
+  - minValue: 0
+    maxValue: 0
+  - minValue: 0
+    maxValue: 0
+  value: 0

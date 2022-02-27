@@ -14,10 +14,18 @@ public struct Requierement
 	private int maxValue;
 	public int MaxValue { get => maxValue; }
 
+	[SerializeField]
 	private int value;
-	public int Value { get => value; }
+	public int Value { get => value; private set => this.value = value; }
+	public Requierement(Requierement requierement) : this()
+	{
+		name = requierement.name;
+		minValue = requierement.minValue;
+		maxValue = requierement.maxValue;
+		Init();
+	}
 
-	public void Init()
+	private void Init()
 	{
 		value = Random.Range(minValue, maxValue);
 	}

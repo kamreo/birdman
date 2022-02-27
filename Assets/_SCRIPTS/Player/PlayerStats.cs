@@ -2,29 +2,84 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats, ICombatStats, ICombatMethods
+public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
 {
 	private const int fixedUpdateRate = 50;         // Value needed to correctly apply regeneration
-													//[SerializeField] SceneChanger sceneChanger;     // Calls "LoadGameOver" scene when player die
-	[Header("God mode")]
-	[SerializeField] bool unlimitedHP;              // Give player max health every update
-	[SerializeField] bool unlimitedMP;              // Give player max mana every update
-	[SerializeField] bool noCooldowns;              // Removes cooldowns
-	[Tooltip("Player will stay alive at 1HP")]
-	[SerializeField] bool cantDie;                  // Player never dies (stays at 1hp)
-
-	public bool NoCooldowns { get => noCooldowns; }
 
 	[Header("Bools")]
 	[SerializeField] bool resetStats = false;
 	[SerializeField] bool printPassvieNodesIds = false;
 
-	#region Stats
+	#region BaseStats
 
-	public Stat Dexterity { get; }
-	public Stat Intelligence { get; }
-	public Stat Strength { get; }
+	[Header("Dexterity")]
+	[SerializeField]
+	private int baseDexterity;
+	[SerializeField]
+	private Stat dexterity;
+	public Stat Dexterity { get; set; }
+	[SerializeField]
+	private int attackSpeedPerDexteriry;
+	public int AttackSpeedPerDexterity { get => attackSpeedPerDexteriry; }
+	[SerializeField]
+	private int evasionPerDexterity;
+	public int EvasionPerDexterity { get => evasionPerDexterity; }
 
+	[Header("Intelligence")]
+	[SerializeField]
+	private int baseIntelligence;
+	[SerializeField]
+	private Stat intelligence;
+	public Stat Intelligence { get; set; }
+	[SerializeField]
+	private int maxManaPerIntelligence;
+	public int MaxManaPerIntelligence { get => maxManaPerIntelligence; }
+	[SerializeField]
+	private int magicalAttackDamagePerIntelligence;
+	public int MagicalAttackDamagePerIntelligence { get => MagicalAttackDamagePerIntelligence; }
+
+	[Header("Strength")]
+	[SerializeField]
+	private int baseStrength;
+	[SerializeField]
+	private Stat strength;
+	public Stat Strength { get; set; }
+	[SerializeField]
+	private int maxHealthPerStrength;
+	public int MaxHealthPerStrength { get => maxHealthPerStrength; }
+	[SerializeField]
+	private int physicalAttackDamagePerStrength;
+	public int PhysicalAttackDamagePerStrength { get => physicalAttackDamagePerStrength; }
+
+
+	public void ModifyPlayerStat(ItemStatSO itemStat)
+	{
+		ModifyPlayerStat(itemStat.Name, itemStat.Value);
+	}
+
+	public void ModifyPlayerStat(string statName, int value)
+	{
+		switch (statName)
+		{
+			case "Dexterity":
+				{
+					dexterity.BaseValue += value;
+					break;
+				}
+			case "Intelligence":
+				{
+					intelligence.BaseValue += value;
+					break;
+				}
+			case "Strength":
+				{
+					strength.BaseValue += value;
+					break;
+				}
+			default:
+				break;
+		}
+	}
 
 	#endregion
 
@@ -32,46 +87,45 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats, ICombatStats
 	[Header("Health")]
 
 	// Available in Unity
-	[SerializeField] Stat health;
-	[SerializeField] float currentHP = 500;
-	[SerializeField] float hpBoostPerLevel = 30;
+	[SerializeField] Stat maxHealth;
+	[SerializeField] float currentHealth = 500;
 	[Space]
 	[Tooltip("Health regeneration per second (applied 1/50 value per fixedUpdate()")]
-	[SerializeField] Stat regenHP;
+	[SerializeField] Stat regenHealth;
 	[Space]
 	[SerializeField] Slider hpSlider;               // UI Slider that shows current HP
 
 	// Properties
-	public Stat Health
+	public Stat MaxHealth
 	{
-		get => health;
+		get => maxHealth;
 		set
 		{
-			health = value;
-			hpSlider.maxValue = Health.CalculatedValue;
+			maxHealth = value;
+			hpSlider.maxValue = MaxHealth.CalculatedValue;
 		}
 	}
 
 	public float CurrentHealth
 	{
-		get => currentHP;
+		get => currentHealth;
 		set
 		{
-			if (value < health.CalculatedValue)
+			if (value < MaxHealth.CalculatedValue)
 			{
-				currentHP = value;
+				currentHealth = value;
 			}
 			else
 			{
-				currentHP = health.CalculatedValue;
+				currentHealth = MaxHealth.CalculatedValue;
 			}
 		}
 	}
 
 	public Stat RegenHealth
 	{
-		get => regenHP;
-		set => regenHP = value;
+		get => regenHealth;
+		set => regenHealth = value;
 	}
 
 
@@ -81,44 +135,48 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats, ICombatStats
 	[Header("Mana")]
 
 	// Available in Unity
-	[SerializeField] Stat mana;
-	[SerializeField] float currentMP = 200;
-	[SerializeField] float mpBoostPerLevel = 20;
+	[SerializeField] Stat maxMana;
+	[SerializeField] float currentMana = 200;
 	[Tooltip("Health regeneration per second (applied 1/50 value per fixedUpdate()")]
-	[SerializeField] Stat regenMP;
+	[SerializeField] Stat regenMana;
 	[Space]
 	[SerializeField] Slider mpSlider;                // UI Slider that shows current MP
 
 	// Properties
-	public Stat Mana
+	public Stat MaxMana
 	{
-		get => mana;
+		get => maxMana;
 		set
 		{
-			mana = value;
-			mpSlider.maxValue = Mana.CalculatedValue;
+			maxMana = value;
+			mpSlider.maxValue = MaxMana.CalculatedValue;
+		}
+	}
+	public float CurrentMana
+	{
+		get => currentMana;
+		set
+		{
+			// value = currentaMana + value
+			if (value < MaxMana.CalculatedValue)
+			{
+				currentMana = value;
+			}
+			else if (value < 0)
+			{
+				Debug.LogWarning("New currentMana value cannot be below 0 !!!");
+			}
+			else
+			{
+				currentMana = MaxMana.CalculatedValue;
+			}
 		}
 	}
 
-	public float CurrentMP
+	public Stat RegenMana
 	{
-		get => currentMP;
-		set
-		{
-			if (value >= 0 && value <= Mana.CalculatedValue)
-			{
-				currentMP = value;
-			}
-			if (value > Mana.CalculatedValue)
-			{
-				currentMP = Mana.CalculatedValue;
-			}
-		}
-	}
-	public Stat RegenMP
-	{
-		get => regenMP;
-		set => regenMP = value;
+		get => regenMana;
+		set => regenMana = value;
 	}
 
 	#endregion
@@ -207,7 +265,7 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats, ICombatStats
 
 	void LevelUpPlayer()
 	{
-		UpdateStats();
+		LevelUp();
 		UpdateHUD();
 	}
 
@@ -220,70 +278,6 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats, ICombatStats
 		// The basic quadratic function to calc
 		expNeededToLevelUp = (int)Mathf.Floor(a * Level * Level + b * Level + c);
 	}
-
-	#endregion
-
-	#region Taking Damage
-	[Header("Taking Damage")]
-
-	[Tooltip("If value is below zero, object takes increased damage")]
-	[SerializeField] Stat armor;
-	bool tookDamage = false;
-
-	public Stat Armor
-	{
-		get => armor;
-		set => armor = value;
-	}
-
-	public void TakeDamage(float damageTaken)
-	{
-		tookDamage = true;
-		float damageAfterReduction = ((100f - Armor.CalculatedValue) / 100) * damageTaken;
-		CurrentHealth -= damageAfterReduction;
-	}
-
-	#endregion
-
-	#region Movement
-	[Header("Movement")]
-
-	// Available in Unity
-	[SerializeField, Range(0f, 10f)] float speed = 5;
-	[SerializeField, Range(1f, 2f)] float sprintMultiplier = 1.25f;
-
-	// Properties
-	public float Speed { get => speed; }
-	public float SprintMultiplier { get => sprintMultiplier; }
-	public float CurrentMana { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-	public Stat RegenMana { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-	float IBaseStats.Speed { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-	float IBaseStats.SprintMultiplier { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
-	public Stat MagicDefense => throw new System.NotImplementedException();
-
-	public Stat Evasion => throw new System.NotImplementedException();
-
-	public Stat MinDamage => throw new System.NotImplementedException();
-
-	public Stat MaxDamage => throw new System.NotImplementedException();
-
-	public Stat AttackSpeed => throw new System.NotImplementedException();
-
-	public Stat CritChance => throw new System.NotImplementedException();
-
-	public Stat CritMultiplier => throw new System.NotImplementedException();
-
-	Stat ICombatStats.MagicDefense { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-	Stat ICombatStats.Evasion { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-	Stat ICombatStats.MinDamage { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-	Stat ICombatStats.MaxDamage { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-	Stat ICombatStats.AttackSpeed { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-	Stat ICombatStats.CritChance { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-	Stat ICombatStats.CritMultiplier { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-	Stat IPlayerStats.Dexterity { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-	Stat IPlayerStats.Intelligence { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-	Stat IPlayerStats.Strength { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
 	#endregion
 
@@ -303,32 +297,21 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats, ICombatStats
 	#endregion
 
 	#region Methods
-	void UpdateStats()
+	void LevelUp()
 	{
 		Level++;
 		SpellPoints++;
-		PassivePoints++;
+		PassivePoints += 3;
 
 		currentExp -= expNeededToLevelUp;
 		CalcNeededExperienceToLevelUp();
-
-		bool isFullHP = (CurrentHealth >= Health.CalculatedValue) ? true : false;
-		bool isFullMP = (CurrentMP >= Mana.CalculatedValue) ? true : false;
-
-		health.BaseValue += hpBoostPerLevel;
-		if (isFullHP)
-			currentHP = health.CalculatedValue;
-
-		mana.BaseValue += mpBoostPerLevel;
-		if (isFullMP)
-			currentMP = Mana.CalculatedValue;
 	}
 
 	void UpdateHUD()
 	{
 		expSlider.maxValue = expNeededToLevelUp;
-		hpSlider.maxValue = Health.CalculatedValue;
-		mpSlider.maxValue = Mana.CalculatedValue;
+		hpSlider.maxValue = MaxHealth.CalculatedValue;
+		mpSlider.maxValue = MaxMana.CalculatedValue;
 		levelText.text = level.ToString();
 
 		if (spellPointsText != null)
@@ -340,15 +323,19 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats, ICombatStats
 
 	public void SetUp()
 	{
-		health.CalculateValue();
-		hpSlider.minValue = 0;
-		hpSlider.maxValue = health.CalculatedValue;
-		hpSlider.value = currentHP;
+		Dexterity = new Stat(baseDexterity);
+		Intelligence = new Stat(baseIntelligence);
+		Strength = new Stat(baseStrength);
 
-		mana.CalculateValue();
+		maxHealth.CalculateValue();
+		hpSlider.minValue = 0;
+		hpSlider.maxValue = maxHealth.CalculatedValue;
+		hpSlider.value = currentHealth;
+
+		maxMana.CalculateValue();
 		mpSlider.minValue = 0;
-		mpSlider.maxValue = Mana.CalculatedValue;
-		mpSlider.value = currentMP;
+		mpSlider.maxValue = MaxMana.CalculatedValue;
+		mpSlider.value = currentMana;
 
 		CalcNeededExperienceToLevelUp();
 		expSlider.minValue = 0;
@@ -366,11 +353,10 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats, ICombatStats
 
 	public void ResetStats()
 	{
-		Health = new Stat(Health.BaseValue);
-		Mana = new Stat(Mana.BaseValue);
+		MaxHealth = new Stat(MaxHealth.BaseValue);
+		MaxMana = new Stat(MaxMana.BaseValue);
 		RegenHealth = new Stat(RegenHealth.BaseValue);
-		RegenMP = new Stat(RegenMP.BaseValue);
-		Armor = new Stat(Armor.BaseValue);
+		RegenMana = new Stat(RegenMana.BaseValue);
 
 		//PassiveIds = new List<int>();
 		PassivePoints = Level;
@@ -417,15 +403,9 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats, ICombatStats
 
 	private void Update()
 	{
-		hpSlider.value = currentHP;
-		mpSlider.value = currentMP;
+		hpSlider.value = currentHealth;
+		mpSlider.value = currentMana;
 		expSlider.value = currentExp;
-
-		if (tookDamage)
-		{
-			//currentTint = takeDamageTint; // Makes hero material red
-			tookDamage = false;
-		}
 
 		// Changes hero material back to normal color through time
 		//if (currentTint.a > 0)
@@ -441,20 +421,9 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats, ICombatStats
 		}
 
 		// Check if dying
-		if (currentHP <= 0)
+		if (currentHealth <= 0)
 		{
-			if (!cantDie)
-			{
-				//SpellSystem spellSystem = transform.parent.GetComponentInChildren<SpellSystem>();
-				//DataManager.GetPlayerData(this, spellSystem);
-
-				//sceneChanger.LoadGameOver();
-				Debug.Log("Died");
-			}
-			else
-			{
-				currentHP = 1f;
-			}
+			Debug.Log("Player died!");
 		}
 
 		if (spellPointsText == null)
@@ -477,62 +446,13 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats, ICombatStats
 		}
 
 
-		// Cheats
-		if (unlimitedHP)
-		{
-			currentHP = health.CalculatedValue;
-		}
 
-		if (unlimitedMP)
-		{
-			currentMP = Mana.CalculatedValue;
-		}
 	}
 
 	private void FixedUpdate()
 	{
 		CurrentHealth += RegenHealth.CalculatedValue / fixedUpdateRate;
-		CurrentMP += RegenMP.CalculatedValue / fixedUpdateRate;
+		CurrentMana += RegenMana.CalculatedValue / fixedUpdateRate;
 	}
 	#endregion
-
-	public void ModifyStatValue(ItemStatSOInt itemStat)
-	{
-		throw new System.NotImplementedException();
-	}
-
-	public void ModifyStatValue(string statName, int value)
-	{
-		throw new System.NotImplementedException();
-	}
-
-	public void ModifyStat(ItemStatSO itemStat)
-	{
-		throw new System.NotImplementedException();
-	}
-
-	public void ModifyFloatStat(string statName, float value)
-	{
-		throw new System.NotImplementedException();
-	}
-
-	public void ModifyIntStat(string statName, int value)
-	{
-		throw new System.NotImplementedException();
-	}
-
-	public void ModifyDamageStat(ItemStatSORange itemStat)
-	{
-		throw new System.NotImplementedException();
-	}
-
-	public void ModifyDamageStat(float minDamage, float maxDamage)
-	{
-		throw new System.NotImplementedException();
-	}
-
-	public void TakeDamage(float damageTaken, string damageType)
-	{
-		throw new System.NotImplementedException();
-	}
 }
