@@ -7,6 +7,7 @@
 	public Stat MinDamage { get; set; }
 	public Stat MaxDamage { get; set; }
 	public Stat AttackSpeed { get; set; }
+	public Stat AttackRange { get; set; }
 	public Stat CritChance { get; set; }
 	public Stat CritMultiplier { get; set; }
 

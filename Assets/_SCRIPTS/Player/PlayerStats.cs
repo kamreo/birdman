@@ -285,16 +285,16 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
 	//[Header("Passives")]
 	//public List<int> PassiveIds;
 
-	#endregion
+    #endregion
 
-	#region Material and colors
-	//[Header("Material and colors")]
-	//[SerializeField] Material spriteMaterial;
-	//[SerializeField] Color takeDamageTint;
-	//Color currentTint;
-	//[SerializeField] float tintFadeSpeed;
+    #region Material and colors
+    //[Header("Material and colors")]
+    //[SerializeField] Material spriteMaterial;
+    //[SerializeField] Color takeDamageTint;
+    //Color currentTint;
+    //[SerializeField] float tintFadeSpeed;
 
-	#endregion
+    #endregion
 
 	#region Methods
 	void LevelUp()
