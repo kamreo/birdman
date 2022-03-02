@@ -17914,6 +17914,7 @@ GameObject:
   - component: {fileID: 1117451039}
   - component: {fileID: 1117451041}
   - component: {fileID: 1117451040}
+  - component: {fileID: 1117451042}
   m_Layer: 5
   m_Name: Highlighter
   m_TagString: Untagged
@@ -17978,6 +17979,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1117451038}
   m_CullTransparentMesh: 1
+--- !u!225 &1117451042
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117451038}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1163770883
 GameObject:
   m_ObjectHideFlags: 0

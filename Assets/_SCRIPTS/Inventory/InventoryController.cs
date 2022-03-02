@@ -29,7 +29,11 @@ public class InventoryController : MonoBehaviour
         set
         {
             if (value != null)
+            {
                 lastUsedItemGrid = value;
+                // TEST
+                inventoryHighlighter.SetParent(value);
+            }
         }
     }
     private InventoryGridItem selectedItem;
@@ -300,10 +304,10 @@ public class InventoryController : MonoBehaviour
             rectTransform = selectedItem.GetComponent<RectTransform>();
         }
 
-        //Debug.Log($"Try to pick {selectedItem.name}");
-
         if (rectTransform != null)
             rectTransform.SetAsLastSibling();
+
+        lastUsedItemGrid = selectedItemGrid;
     }
 
     private void PressedLeftButton()

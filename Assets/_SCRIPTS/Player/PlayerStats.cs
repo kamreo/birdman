@@ -4,286 +4,286 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
 {
-	private const int fixedUpdateRate = 50;         // Value needed to correctly apply regeneration
+    private const int fixedUpdateRate = 50;         // Value needed to correctly apply regeneration
 
-	[Header("Bools")]
-	[SerializeField] bool resetStats = false;
-	[SerializeField] bool printPassvieNodesIds = false;
+    [Header("Bools")]
+    [SerializeField] bool resetStats = false;
+    [SerializeField] bool printPassvieNodesIds = false;
 
-	#region BaseStats
+    #region BaseStats
 
-	[Header("Dexterity")]
-	[SerializeField]
-	private int baseDexterity;
-	[SerializeField]
-	private Stat dexterity;
-	public Stat Dexterity { get; set; }
-	[SerializeField]
-	private int attackSpeedPerDexteriry;
-	public int AttackSpeedPerDexterity { get => attackSpeedPerDexteriry; }
-	[SerializeField]
-	private int evasionPerDexterity;
-	public int EvasionPerDexterity { get => evasionPerDexterity; }
+    [Header("Dexterity")]
+    [SerializeField]
+    private int baseDexterity;
+    [SerializeField]
+    private Stat dexterity;
+    public Stat Dexterity { get; set; }
+    [SerializeField]
+    private int attackSpeedPerDexteriry;
+    public int AttackSpeedPerDexterity { get => attackSpeedPerDexteriry; }
+    [SerializeField]
+    private int evasionPerDexterity;
+    public int EvasionPerDexterity { get => evasionPerDexterity; }
 
-	[Header("Intelligence")]
-	[SerializeField]
-	private int baseIntelligence;
-	[SerializeField]
-	private Stat intelligence;
-	public Stat Intelligence { get; set; }
-	[SerializeField]
-	private int maxManaPerIntelligence;
-	public int MaxManaPerIntelligence { get => maxManaPerIntelligence; }
-	[SerializeField]
-	private int magicalAttackDamagePerIntelligence;
-	public int MagicalAttackDamagePerIntelligence { get => MagicalAttackDamagePerIntelligence; }
+    [Header("Intelligence")]
+    [SerializeField]
+    private int baseIntelligence;
+    [SerializeField]
+    private Stat intelligence;
+    public Stat Intelligence { get; set; }
+    [SerializeField]
+    private int maxManaPerIntelligence;
+    public int MaxManaPerIntelligence { get => maxManaPerIntelligence; }
+    [SerializeField]
+    private int magicalAttackDamagePerIntelligence;
+    public int MagicalAttackDamagePerIntelligence { get => MagicalAttackDamagePerIntelligence; }
 
-	[Header("Strength")]
-	[SerializeField]
-	private int baseStrength;
-	[SerializeField]
-	private Stat strength;
-	public Stat Strength { get; set; }
-	[SerializeField]
-	private int maxHealthPerStrength;
-	public int MaxHealthPerStrength { get => maxHealthPerStrength; }
-	[SerializeField]
-	private int physicalAttackDamagePerStrength;
-	public int PhysicalAttackDamagePerStrength { get => physicalAttackDamagePerStrength; }
-
-
-	public void ModifyPlayerStat(ItemStatSO itemStat)
-	{
-		ModifyPlayerStat(itemStat.Name, itemStat.Value);
-	}
-
-	public void ModifyPlayerStat(string statName, int value)
-	{
-		switch (statName)
-		{
-			case "Dexterity":
-				{
-					dexterity.BaseValue += value;
-					break;
-				}
-			case "Intelligence":
-				{
-					intelligence.BaseValue += value;
-					break;
-				}
-			case "Strength":
-				{
-					strength.BaseValue += value;
-					break;
-				}
-			default:
-				break;
-		}
-	}
-
-	#endregion
-
-	#region Health
-	[Header("Health")]
-
-	// Available in Unity
-	[SerializeField] Stat maxHealth;
-	[SerializeField] float currentHealth = 500;
-	[Space]
-	[Tooltip("Health regeneration per second (applied 1/50 value per fixedUpdate()")]
-	[SerializeField] Stat regenHealth;
-	[Space]
-	[SerializeField] Slider hpSlider;               // UI Slider that shows current HP
-
-	// Properties
-	public Stat MaxHealth
-	{
-		get => maxHealth;
-		set
-		{
-			maxHealth = value;
-			hpSlider.maxValue = MaxHealth.CalculatedValue;
-		}
-	}
-
-	public float CurrentHealth
-	{
-		get => currentHealth;
-		set
-		{
-			if (value < MaxHealth.CalculatedValue)
-			{
-				currentHealth = value;
-			}
-			else
-			{
-				currentHealth = MaxHealth.CalculatedValue;
-			}
-		}
-	}
-
-	public Stat RegenHealth
-	{
-		get => regenHealth;
-		set => regenHealth = value;
-	}
+    [Header("Strength")]
+    [SerializeField]
+    private int baseStrength;
+    [SerializeField]
+    private Stat strength;
+    public Stat Strength { get; set; }
+    [SerializeField]
+    private int maxHealthPerStrength;
+    public int MaxHealthPerStrength { get => maxHealthPerStrength; }
+    [SerializeField]
+    private int physicalAttackDamagePerStrength;
+    public int PhysicalAttackDamagePerStrength { get => physicalAttackDamagePerStrength; }
 
 
-	#endregion
+    //public void ModifyPlayerStat(ItemStatSO itemStat)
+    //{
+    //	ModifyPlayerStat(itemStat.Name, itemStat.Value);
+    //}
 
-	#region Mana
-	[Header("Mana")]
+    //public void ModifyPlayerStat(string statName, int value)
+    //{
+    //	switch (statName)
+    //	{
+    //		case "Dexterity":
+    //			{
+    //				dexterity.BaseValue += value;
+    //				break;
+    //			}
+    //		case "Intelligence":
+    //			{
+    //				intelligence.BaseValue += value;
+    //				break;
+    //			}
+    //		case "Strength":
+    //			{
+    //				strength.BaseValue += value;
+    //				break;
+    //			}
+    //		default:
+    //			break;
+    //	}
+    //}
 
-	// Available in Unity
-	[SerializeField] Stat maxMana;
-	[SerializeField] float currentMana = 200;
-	[Tooltip("Health regeneration per second (applied 1/50 value per fixedUpdate()")]
-	[SerializeField] Stat regenMana;
-	[Space]
-	[SerializeField] Slider mpSlider;                // UI Slider that shows current MP
+    #endregion
 
-	// Properties
-	public Stat MaxMana
-	{
-		get => maxMana;
-		set
-		{
-			maxMana = value;
-			mpSlider.maxValue = MaxMana.CalculatedValue;
-		}
-	}
-	public float CurrentMana
-	{
-		get => currentMana;
-		set
-		{
-			// value = currentaMana + value
-			if (value < MaxMana.CalculatedValue)
-			{
-				currentMana = value;
-			}
-			else if (value < 0)
-			{
-				Debug.LogWarning("New currentMana value cannot be below 0 !!!");
-			}
-			else
-			{
-				currentMana = MaxMana.CalculatedValue;
-			}
-		}
-	}
+    #region Health
+    [Header("Health")]
 
-	public Stat RegenMana
-	{
-		get => regenMana;
-		set => regenMana = value;
-	}
+    // Available in Unity
+    [SerializeField] Stat maxHealth;
+    [SerializeField] float currentHealth = 500;
+    [Space]
+    [Tooltip("Health regeneration per second (applied 1/50 value per fixedUpdate()")]
+    [SerializeField] Stat regenHealth;
+    [Space]
+    [SerializeField] Slider hpSlider;               // UI Slider that shows current HP
 
-	#endregion
+    // Properties
+    public Stat MaxHealth
+    {
+        get => maxHealth;
+        set
+        {
+            maxHealth = value;
+            hpSlider.maxValue = MaxHealth.CalculatedValue;
+        }
+    }
 
-	#region Experience
-	[Header("Experience")]
+    public float CurrentHealth
+    {
+        get => currentHealth;
+        set
+        {
+            if (value < MaxHealth.CalculatedValue)
+            {
+                currentHealth = value;
+            }
+            else
+            {
+                currentHealth = MaxHealth.CalculatedValue;
+            }
+        }
+    }
 
-	// Available in Unity
-	[SerializeField] Slider expSlider;
-	[Space]
-	[SerializeField] int expNeededToLevelUp = 600;
-	[SerializeField] int currentExp = 0;
-	[Space]
-	[SerializeField] int level = 1;
-	[SerializeField] TMP_Text levelText;
-	[Space]
-	[SerializeField] int spellPoints = 1;
-	[SerializeField] TMP_Text spellPointsText;
-	[Space]
-	[SerializeField] int passivePoints = 1;
-	[SerializeField] TMP_Text passivePointsText;
+    public Stat RegenHealth
+    {
+        get => regenHealth;
+        set => regenHealth = value;
+    }
 
-	public int CurrentExp
-	{
-		get => currentExp;
-		set
-		{
-			if (value > 0)
-			{
-				currentExp = value;
-			}
-		}
-	}
-	public int ExpNeededToLevelUp
-	{
-		get => expNeededToLevelUp;
-		set
-		{
-			if (value > 0)
-			{
-				expNeededToLevelUp = value;
-			}
-		}
-	}
 
-	public int Level
-	{
-		get => level;
-		set
-		{
-			if (value >= 1)
-			{
-				level = value;
-				levelText.text = spellPoints.ToString();
-			}
-		}
-	}
+    #endregion
 
-	public int SpellPoints
-	{
-		get => spellPoints;
-		set
-		{
-			if (value >= 0)
-			{
-				spellPoints = value;
-				if (spellPointsText != null)
-					spellPointsText.text = spellPoints.ToString();
-			}
-		}
-	}
+    #region Mana
+    [Header("Mana")]
 
-	public int PassivePoints
-	{
-		get => passivePoints;
-		set
-		{
-			if (value >= 0)
-			{
-				passivePoints = value;
-				if (passivePointsText != null)
-					passivePointsText.text = passivePoints.ToString();
-			}
-		}
-	}
+    // Available in Unity
+    [SerializeField] Stat maxMana;
+    [SerializeField] float currentMana = 200;
+    [Tooltip("Health regeneration per second (applied 1/50 value per fixedUpdate()")]
+    [SerializeField] Stat regenMana;
+    [Space]
+    [SerializeField] Slider mpSlider;                // UI Slider that shows current MP
 
-	void LevelUpPlayer()
-	{
-		LevelUp();
-		UpdateHUD();
-	}
+    // Properties
+    public Stat MaxMana
+    {
+        get => maxMana;
+        set
+        {
+            maxMana = value;
+            mpSlider.maxValue = MaxMana.CalculatedValue;
+        }
+    }
+    public float CurrentMana
+    {
+        get => currentMana;
+        set
+        {
+            // value = currentaMana + value
+            if (value < MaxMana.CalculatedValue)
+            {
+                currentMana = value;
+            }
+            else if (value < 0)
+            {
+                Debug.LogWarning("New currentMana value cannot be below 0 !!!");
+            }
+            else
+            {
+                currentMana = MaxMana.CalculatedValue;
+            }
+        }
+    }
 
-	void CalcNeededExperienceToLevelUp()
-	{
-		float a = 5;        // a > 0
-		float b = 10;
-		float c = 485;      // a+b+c = exp needed to level up at 1 level
+    public Stat RegenMana
+    {
+        get => regenMana;
+        set => regenMana = value;
+    }
 
-		// The basic quadratic function to calc
-		expNeededToLevelUp = (int)Mathf.Floor(a * Level * Level + b * Level + c);
-	}
+    #endregion
 
-	#endregion
+    #region Experience
+    [Header("Experience")]
 
-	#region Passives
-	//[Header("Passives")]
-	//public List<int> PassiveIds;
+    // Available in Unity
+    [SerializeField] Slider expSlider;
+    [Space]
+    [SerializeField] int expNeededToLevelUp = 600;
+    [SerializeField] int currentExp = 0;
+    [Space]
+    [SerializeField] int level = 1;
+    [SerializeField] TMP_Text levelText;
+    [Space]
+    [SerializeField] int spellPoints = 1;
+    [SerializeField] TMP_Text spellPointsText;
+    [Space]
+    [SerializeField] int passivePoints = 1;
+    [SerializeField] TMP_Text passivePointsText;
+
+    public int CurrentExp
+    {
+        get => currentExp;
+        set
+        {
+            if (value > 0)
+            {
+                currentExp = value;
+            }
+        }
+    }
+    public int ExpNeededToLevelUp
+    {
+        get => expNeededToLevelUp;
+        set
+        {
+            if (value > 0)
+            {
+                expNeededToLevelUp = value;
+            }
+        }
+    }
+
+    public int Level
+    {
+        get => level;
+        set
+        {
+            if (value >= 1)
+            {
+                level = value;
+                levelText.text = spellPoints.ToString();
+            }
+        }
+    }
+
+    public int SpellPoints
+    {
+        get => spellPoints;
+        set
+        {
+            if (value >= 0)
+            {
+                spellPoints = value;
+                if (spellPointsText != null)
+                    spellPointsText.text = spellPoints.ToString();
+            }
+        }
+    }
+
+    public int PassivePoints
+    {
+        get => passivePoints;
+        set
+        {
+            if (value >= 0)
+            {
+                passivePoints = value;
+                if (passivePointsText != null)
+                    passivePointsText.text = passivePoints.ToString();
+            }
+        }
+    }
+
+    void LevelUpPlayer()
+    {
+        LevelUp();
+        UpdateHUD();
+    }
+
+    void CalcNeededExperienceToLevelUp()
+    {
+        float a = 5;        // a > 0
+        float b = 10;
+        float c = 485;      // a+b+c = exp needed to level up at 1 level
+
+        // The basic quadratic function to calc
+        expNeededToLevelUp = (int)Mathf.Floor(a * Level * Level + b * Level + c);
+    }
+
+    #endregion
+
+    #region Passives
+    //[Header("Passives")]
+    //public List<int> PassiveIds;
 
     #endregion
 
@@ -296,163 +296,167 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
 
     #endregion
 
-	#region Methods
-	void LevelUp()
-	{
-		Level++;
-		SpellPoints++;
-		PassivePoints += 3;
+    #region Methods
+    void LevelUp()
+    {
+        Level++;
+        SpellPoints++;
+        PassivePoints += 3;
 
-		currentExp -= expNeededToLevelUp;
-		CalcNeededExperienceToLevelUp();
-	}
+        currentExp -= expNeededToLevelUp;
+        CalcNeededExperienceToLevelUp();
+    }
 
-	void UpdateHUD()
-	{
-		expSlider.maxValue = expNeededToLevelUp;
-		hpSlider.maxValue = MaxHealth.CalculatedValue;
-		mpSlider.maxValue = MaxMana.CalculatedValue;
-		levelText.text = level.ToString();
+    void UpdateHUD()
+    {
+        expSlider.maxValue = expNeededToLevelUp;
+        hpSlider.maxValue = MaxHealth.CalculatedValue;
+        mpSlider.maxValue = MaxMana.CalculatedValue;
+        levelText.text = level.ToString();
 
-		if (spellPointsText != null)
-			spellPointsText.text = spellPoints.ToString();
+        if (spellPointsText != null)
+            spellPointsText.text = spellPoints.ToString();
 
-		if (passivePointsText != null)
-			passivePointsText.text = passivePoints.ToString();
-	}
+        if (passivePointsText != null)
+            passivePointsText.text = passivePoints.ToString();
+    }
 
-	public void SetUp()
-	{
-		Dexterity = new Stat(baseDexterity);
-		Intelligence = new Stat(baseIntelligence);
-		Strength = new Stat(baseStrength);
+    public void SetUp()
+    {
+        Dexterity = new Stat(baseDexterity);
+        Intelligence = new Stat(baseIntelligence);
+        Strength = new Stat(baseStrength);
 
-		maxHealth.CalculateValue();
-		hpSlider.minValue = 0;
-		hpSlider.maxValue = maxHealth.CalculatedValue;
-		hpSlider.value = currentHealth;
+        maxHealth.CalculateValue();
+        hpSlider.minValue = 0;
+        hpSlider.maxValue = maxHealth.CalculatedValue;
+        hpSlider.value = currentHealth;
 
-		maxMana.CalculateValue();
-		mpSlider.minValue = 0;
-		mpSlider.maxValue = MaxMana.CalculatedValue;
-		mpSlider.value = currentMana;
+        maxMana.CalculateValue();
+        mpSlider.minValue = 0;
+        mpSlider.maxValue = MaxMana.CalculatedValue;
+        mpSlider.value = currentMana;
 
-		CalcNeededExperienceToLevelUp();
-		expSlider.minValue = 0;
-		expSlider.maxValue = expNeededToLevelUp;
-		expSlider.value = currentExp;
+        CalcNeededExperienceToLevelUp();
+        expSlider.minValue = 0;
+        expSlider.maxValue = expNeededToLevelUp;
+        expSlider.value = currentExp;
 
-		levelText.text = level.ToString();
-		if (spellPointsText != null)
-			spellPointsText.text = spellPoints.ToString();
-		if (passivePointsText != null)
-			passivePointsText.text = passivePoints.ToString();
+        levelText.text = level.ToString();
+        if (spellPointsText != null)
+            spellPointsText.text = spellPoints.ToString();
+        if (passivePointsText != null)
+            passivePointsText.text = passivePoints.ToString();
 
-		//spriteMaterial.SetColor("_Tint", currentTint);
-	}
+        //spriteMaterial.SetColor("_Tint", currentTint);
+    }
 
-	public void ResetStats()
-	{
-		MaxHealth = new Stat(MaxHealth.BaseValue);
-		MaxMana = new Stat(MaxMana.BaseValue);
-		RegenHealth = new Stat(RegenHealth.BaseValue);
-		RegenMana = new Stat(RegenMana.BaseValue);
+    public void ResetStats()
+    {
+        MaxHealth = new Stat(MaxHealth.BaseValue);
+        MaxMana = new Stat(MaxMana.BaseValue);
+        RegenHealth = new Stat(RegenHealth.BaseValue);
+        RegenMana = new Stat(RegenMana.BaseValue);
 
-		//PassiveIds = new List<int>();
-		PassivePoints = Level;
-	}
+        Dexterity = new Stat(Dexterity.BaseValue);
+        Intelligence = new Stat(Intelligence.BaseValue);
+        Strength = new Stat(Strength.BaseValue);
 
-	//public void PrintPickedNodes()
-	//{
-	//	string nodes = string.Empty;
-	//	foreach (var node in PassiveIds)
-	//	{
-	//		nodes += node + ", ";
-	//	}
+        //PassiveIds = new List<int>();
+        PassivePoints = Level;
+    }
 
-	//	Debug.Log("Picked nodes: " + nodes);
-	//}
+    //public void PrintPickedNodes()
+    //{
+    //	string nodes = string.Empty;
+    //	foreach (var node in PassiveIds)
+    //	{
+    //		nodes += node + ", ";
+    //	}
 
-	private TMP_Text FindTextObjectByName(string objectName)
-	{
-		var tmpTexts = Resources.FindObjectsOfTypeAll<TMP_Text>();
-		foreach (var text in tmpTexts)
-		{
-			if (text.name == objectName)
-			{
-				return text;
-			}
-		}
-		return null;
-	}
-	#endregion
+    //	Debug.Log("Picked nodes: " + nodes);
+    //}
 
-	#region Unity Methods
+    private TMP_Text FindTextObjectByName(string objectName)
+    {
+        var tmpTexts = Resources.FindObjectsOfTypeAll<TMP_Text>();
+        foreach (var text in tmpTexts)
+        {
+            if (text.name == objectName)
+            {
+                return text;
+            }
+        }
+        return null;
+    }
+    #endregion
 
-	void Start()
-	{
-		// Finds sceneChanger if loses reference
-		//if (sceneChanger != null)
-		//{
-		//	GameObject sceneManager = GameObject.FindGameObjectsWithTag("Manager").Where(g => g.name == "GameManager").FirstOrDefault();
-		//	sceneChanger = sceneManager.GetComponent<SceneChanger>();
-		//}
+    #region Unity Methods
 
-		SetUp();
-	}
+    void Start()
+    {
+        // Finds sceneChanger if loses reference
+        //if (sceneChanger != null)
+        //{
+        //	GameObject sceneManager = GameObject.FindGameObjectsWithTag("Manager").Where(g => g.name == "GameManager").FirstOrDefault();
+        //	sceneChanger = sceneManager.GetComponent<SceneChanger>();
+        //}
 
-	private void Update()
-	{
-		hpSlider.value = currentHealth;
-		mpSlider.value = currentMana;
-		expSlider.value = currentExp;
+        SetUp();
+    }
 
-		// Changes hero material back to normal color through time
-		//if (currentTint.a > 0)
-		//{
-		//	currentTint.a = Mathf.Clamp01(currentTint.a - tintFadeSpeed * Time.deltaTime);
-		//	spriteMaterial.SetColor("_Tint", currentTint);
-		//}
+    private void Update()
+    {
+        hpSlider.value = currentHealth;
+        mpSlider.value = currentMana;
+        expSlider.value = currentExp;
 
-		// Check if can level up
-		if (currentExp >= expNeededToLevelUp)
-		{
-			LevelUpPlayer();
-		}
+        // Changes hero material back to normal color through time
+        //if (currentTint.a > 0)
+        //{
+        //	currentTint.a = Mathf.Clamp01(currentTint.a - tintFadeSpeed * Time.deltaTime);
+        //	spriteMaterial.SetColor("_Tint", currentTint);
+        //}
 
-		// Check if dying
-		if (currentHealth <= 0)
-		{
-			Debug.Log("Player died!");
-		}
+        // Check if can level up
+        if (currentExp >= expNeededToLevelUp)
+        {
+            LevelUpPlayer();
+        }
 
-		if (spellPointsText == null)
-			spellPointsText = FindTextObjectByName("LeftSpellPointsText");
+        // Check if dying
+        if (currentHealth <= 0)
+        {
+            Debug.Log("Player died!");
+        }
 
-		if (passivePointsText == null)
-			passivePointsText = FindTextObjectByName("LeftPassivePointsText");
+        if (spellPointsText == null)
+            spellPointsText = FindTextObjectByName("LeftSpellPointsText");
 
-
-		if (resetStats)
-		{
-			ResetStats();
-			resetStats = false;
-		}
-
-		if (printPassvieNodesIds)
-		{
-			//PrintPickedNodes();
-			printPassvieNodesIds = false;
-		}
+        if (passivePointsText == null)
+            passivePointsText = FindTextObjectByName("LeftPassivePointsText");
 
 
+        if (resetStats)
+        {
+            ResetStats();
+            resetStats = false;
+        }
 
-	}
+        if (printPassvieNodesIds)
+        {
+            //PrintPickedNodes();
+            printPassvieNodesIds = false;
+        }
 
-	private void FixedUpdate()
-	{
-		CurrentHealth += RegenHealth.CalculatedValue / fixedUpdateRate;
-		CurrentMana += RegenMana.CalculatedValue / fixedUpdateRate;
-	}
-	#endregion
+
+
+    }
+
+    private void FixedUpdate()
+    {
+        CurrentHealth += RegenHealth.CalculatedValue / fixedUpdateRate;
+        CurrentMana += RegenMana.CalculatedValue / fixedUpdateRate;
+    }
+    #endregion
 }

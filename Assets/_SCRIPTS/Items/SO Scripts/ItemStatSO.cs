@@ -45,6 +45,13 @@ public class ItemStatSO : ScriptableObject
         value = Random.Range(tierValues[tier].MinValue, tierValues[tier].MaxValue);
     }
 
+    public void RandValueByTier(int tier)
+    {
+        //Tier = Random.Range(itemLevel / 10 - 3, itemLevel / 10 + 2);
+        this.tier = tier;
+        value = Random.Range(tierValues[tier].MinValue, tierValues[tier].MaxValue);
+    }
+
     //private void OnEnable()
     //{
     //    if (tierValues == null)

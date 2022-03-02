@@ -93,14 +93,14 @@ public class ItemGrid : MonoBehaviour
 
         if (!CheckOverlap(itemPosition, item.itemData.size, ref overlapItem))
         {
-            Debug.Log($"!CheckOverlap({itemPosition}{item.itemData.size}{overlapItem.itemData.name})");
+            Debug.Log($"!CheckOverlap({itemPosition}{item.itemData.size}{overlapItem}) ITEM GRID");
             overlapItem = null;
             return false;
         }
 
         if (overlapItem != null)
         {
-            Debug.Log($"overlapItem != null >>> clear:  {overlapItem.itemData.name})");
+            Debug.Log($"overlapItem != null >>> clear:  {overlapItem.itemData.name}) ITEM GRID");
             CleanGridReference(overlapItem);
         }
 
@@ -148,8 +148,6 @@ public class ItemGrid : MonoBehaviour
                 //    Debug.Log($"Inventory at [{i},{j}] is null!");
                 //else
                 //    Debug.LogWarning($"{inventoryItemSlots[i, j].itemData.name} at [{i},{j}]");
-
-                Debug.Log($"[{i},{j}]");
 
                 if (CheckAvailableSpace(new Vector2Int(i, j), itemData.size))
                 {

@@ -38,12 +38,27 @@ public class ItemDataEquipable : ItemData
             requierements.Add(new Requierement(item));
         }
 
+        int damageValueTier = -1;
         baseStats = new ItemStatSO[baseStatsEditor.Count];
         for (int i = 0; i < baseStatsEditor.Count; i++)
         {
             baseStats[i] = CreateInstance<ItemStatSO>();
             baseStats[i].Init(baseStatsEditor[i]);
-            baseStats[i].RandValue(itemLevel);
+
+            if (baseStats[i].Name.Contains("Physical Damage"))
+            {
+                if (damageValueTier < 0)
+                {
+                    baseStats[i].RandValue(itemLevel);
+                    damageValueTier = baseStats[i].Tier;
+                    continue;
+                }
+                baseStats[i].RandValueByTier(damageValueTier);
+            }
+            else
+            {
+                baseStats[i].RandValue(itemLevel);
+            }
         }
 
         int additionalStatsCountRand = Random.Range(additionalStatsCount.MinValue, additionalStatsCount.MaxValue + 1);

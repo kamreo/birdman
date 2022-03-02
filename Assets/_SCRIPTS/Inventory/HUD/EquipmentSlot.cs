@@ -103,7 +103,6 @@ public class EquipmentSlot : ItemGrid
             return false;
         }
 
-
         if (!CheckOverlap(itemPosition, item.itemData.size, ref overlapItem))
         {
             overlapItem = null;
