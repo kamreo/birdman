@@ -296,6 +296,14 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
 
     #endregion
 
+    #region Notifications
+
+    [Header("Notifications")]
+    [SerializeField]
+    private GameObject passivesButton;
+
+    #endregion
+
     #region Methods
     void LevelUp()
     {
@@ -305,6 +313,7 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
 
         currentExp -= expNeededToLevelUp;
         CalcNeededExperienceToLevelUp();
+        passivesButton.SetActive(true);
     }
 
     void UpdateHUD()
