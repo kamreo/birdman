@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: Crit Multiplier
   m_EditorClassIdentifier: 
   name: Crit Multiplier
-  tier: 0
+  tier: 1
   tierValues:
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
+  - minValue: 10
+    maxValue: 15
+  - minValue: 16
+    maxValue: 29
+  - minValue: 30
+    maxValue: 44
+  - minValue: 45
+    maxValue: 64
+  - minValue: 65
+    maxValue: 85
+  - minValue: 86
+    maxValue: 100
   value: 0

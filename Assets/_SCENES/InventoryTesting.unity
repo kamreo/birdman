@@ -19617,7 +19617,7 @@ MonoBehaviour:
   expSlider: {fileID: 2036101728}
   expNeededToLevelUp: 600
   currentExp: 0
-  level: 1
+  level: 10
   levelText: {fileID: 1115867549}
   spellPoints: 1
   spellPointsText: {fileID: 703003962}
@@ -20951,6 +20951,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HP Potion
       objectReference: {fileID: 0}
+    - target: {fileID: 1385459311735373473, guid: 5ac0e5458ddbc7d45bc73d13e0a32f68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1385459311735373479, guid: 5ac0e5458ddbc7d45bc73d13e0a32f68, type: 3}
       propertyPath: m_RootOrder
       value: 24
@@ -21263,6 +21267,10 @@ PrefabInstance:
     - target: {fileID: 499051233899980923, guid: a29ed35f66bfd084bb5e3d92100b7cbc, type: 3}
       propertyPath: m_Name
       value: MP Potion
+      objectReference: {fileID: 0}
+    - target: {fileID: 499051233899980923, guid: a29ed35f66bfd084bb5e3d92100b7cbc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 499051233899980925, guid: a29ed35f66bfd084bb5e3d92100b7cbc, type: 3}
       propertyPath: m_RootOrder
@@ -21988,6 +21996,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2172972171000797250, guid: 3a71901e1c2a6d84899852988f60d5fe, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2172972171000797257, guid: 3a71901e1c2a6d84899852988f60d5fe, type: 3}
       propertyPath: hpSlider
       value: 

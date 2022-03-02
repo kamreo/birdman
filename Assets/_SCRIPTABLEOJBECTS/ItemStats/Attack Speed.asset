@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: Attack Speed
   m_EditorClassIdentifier: 
   name: Attack Speed
-  tier: 0
+  tier: 1
   tierValues:
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  value: 0
+  - minValue: 15
+    maxValue: 19
+  - minValue: 20
+    maxValue: 24
+  - minValue: 25
+    maxValue: 33
+  - minValue: 34
+    maxValue: 45
+  - minValue: 46
+    maxValue: 63
+  - minValue: 64
+    maxValue: 80
+  value: 21

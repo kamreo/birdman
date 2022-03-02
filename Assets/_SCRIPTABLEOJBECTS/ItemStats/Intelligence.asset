@@ -15,16 +15,16 @@ MonoBehaviour:
   name: Intelligence
   tier: 0
   tierValues:
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
+  - minValue: 1
+    maxValue: 6
+  - minValue: 7
+    maxValue: 14
+  - minValue: 15
+    maxValue: 23
+  - minValue: 24
+    maxValue: 32
+  - minValue: 33
+    maxValue: 43
+  - minValue: 44
+    maxValue: 56
   value: 0

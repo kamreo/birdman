@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: Block Damage
   m_EditorClassIdentifier: 
   name: Block Damage
-  tier: 0
+  tier: 1
   tierValues:
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  value: 0
+  - minValue: 3
+    maxValue: 7
+  - minValue: 8
+    maxValue: 13
+  - minValue: 14
+    maxValue: 25
+  - minValue: 26
+    maxValue: 43
+  - minValue: 44
+    maxValue: 57
+  - minValue: 58
+    maxValue: 62
+  value: 14

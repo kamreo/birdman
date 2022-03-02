@@ -37,13 +37,13 @@ MonoBehaviour:
     minValue: 1
     maxValue: 10
     value: 0
-  baseStats:
+  baseStatsEditor:
   - {fileID: 11400000, guid: 98df35efb9f32b546846b21fb6294c52, type: 2}
-  - {fileID: 11400000, guid: 30b0004ed4a4638418529ef1b927b3ef, type: 2}
   - {fileID: 11400000, guid: 0acd631e04f85e34a82026be9ec9f197, type: 2}
+  - {fileID: 11400000, guid: 30b0004ed4a4638418529ef1b927b3ef, type: 2}
   additionalStatsCount:
-    minValue: 0
-    maxValue: 2
+    minValue: 4
+    maxValue: 4
   additionalStatsEditor:
   - {fileID: 11400000, guid: 2a3a534db7e19ff4e88738c3f4bbe071, type: 2}
   - {fileID: 11400000, guid: 3474dd660ad99474385011082ad4ba9e, type: 2}

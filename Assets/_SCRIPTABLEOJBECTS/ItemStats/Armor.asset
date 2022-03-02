@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: Armor
   m_EditorClassIdentifier: 
   name: Armor
-  tier: 0
+  tier: 1
   tierValues:
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  value: 0
+  - minValue: 2
+    maxValue: 5
+  - minValue: 5
+    maxValue: 10
+  - minValue: 11
+    maxValue: 17
+  - minValue: 18
+    maxValue: 24
+  - minValue: 25
+    maxValue: 32
+  - minValue: 33
+    maxValue: 40
+  value: 6

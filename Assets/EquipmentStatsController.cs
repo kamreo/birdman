@@ -122,6 +122,16 @@ public class EquipmentStatsController : MonoBehaviour
 					playerCombatStats.CritChance.FlatIncome += changeSign * stat.Value;
 					break;
 				}
+			case "Minimal Physical Damage":
+				{
+					playerCombatStats.MinDamage.FlatIncome += changeSign * stat.Value;
+					break;
+				}
+			case "Maximal Physical Damage":
+				{
+					playerCombatStats.MaxDamage.FlatIncome += changeSign * stat.Value;
+					break;
+				}
 
 
 			default:

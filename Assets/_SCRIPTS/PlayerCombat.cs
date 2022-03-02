@@ -28,7 +28,7 @@ public class PlayerCombat : MonoBehaviour
             {
                 enemy.GetComponent<EnemyStats>().TakeDamage(50.0f);
             }
-            
+
         }
     }
 

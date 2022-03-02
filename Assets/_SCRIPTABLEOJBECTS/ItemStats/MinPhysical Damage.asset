@@ -15,16 +15,16 @@ MonoBehaviour:
   name: Minimal Physical Damage
   tier: 0
   tierValues:
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
+  - minValue: 13
+    maxValue: 19
+  - minValue: 24
+    maxValue: 33
+  - minValue: 38
+    maxValue: 52
+  - minValue: 72
+    maxValue: 94
+  - minValue: 115
+    maxValue: 144
+  - minValue: 166
+    maxValue: 199
   value: 0

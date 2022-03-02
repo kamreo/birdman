@@ -15,16 +15,16 @@ MonoBehaviour:
   name: Mana
   tier: 0
   tierValues:
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
+  - minValue: 30
+    maxValue: 40
+  - minValue: 41
+    maxValue: 53
+  - minValue: 54
+    maxValue: 64
+  - minValue: 65
+    maxValue: 76
+  - minValue: 77
+    maxValue: 88
+  - minValue: 87
+    maxValue: 110
   value: 0

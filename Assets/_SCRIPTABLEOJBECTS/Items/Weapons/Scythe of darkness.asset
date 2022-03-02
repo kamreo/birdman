@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37ac414bd406acd4bb0cde32f12ed9a9, type: 3}
-  m_Name: Scythe of darkness 1
+  m_Name: Scythe of darkness
   m_EditorClassIdentifier: 
   name: Scythe of darkness
   description: Scythe made from the darkest darkness
@@ -37,13 +37,15 @@ MonoBehaviour:
     minValue: 1
     maxValue: 10
     value: 0
-  baseStats:
+  baseStatsEditor:
   - {fileID: 11400000, guid: 2ceed863a8a49544498836e1fe426558, type: 2}
+  - {fileID: 11400000, guid: 821115664e5fdf44b89f3b55d2891361, type: 2}
+  - {fileID: 11400000, guid: 53bd406f96a335a4a86be6700824be48, type: 2}
   - {fileID: 11400000, guid: c57c9cc39cac1e845972d79cddd88e7f, type: 2}
   - {fileID: 11400000, guid: 73dab1e0b7c1f80498fd649b00ebf298, type: 2}
   additionalStatsCount:
-    minValue: 0
-    maxValue: 3
+    minValue: 4
+    maxValue: 4
   additionalStatsEditor:
   - {fileID: 11400000, guid: 2a3a534db7e19ff4e88738c3f4bbe071, type: 2}
   - {fileID: 11400000, guid: 3474dd660ad99474385011082ad4ba9e, type: 2}

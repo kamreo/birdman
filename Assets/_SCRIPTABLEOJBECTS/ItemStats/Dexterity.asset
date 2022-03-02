@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa73b78ee9cc21c4fb6d5e2b83ed8c21, type: 3}
   m_Name: Dexterity
   m_EditorClassIdentifier: 
-  name: Dexteriry
-  tier: 0
+  name: Dexterity
+  tier: 1
   tierValues:
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
-  - minValue: 0
-    maxValue: 0
+  - minValue: 1
+    maxValue: 6
+  - minValue: 7
+    maxValue: 14
+  - minValue: 15
+    maxValue: 23
+  - minValue: 24
+    maxValue: 32
+  - minValue: 33
+    maxValue: 43
+  - minValue: 44
+    maxValue: 56
   value: 0
