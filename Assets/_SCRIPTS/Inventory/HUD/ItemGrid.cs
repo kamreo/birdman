@@ -83,7 +83,6 @@ public class ItemGrid : MonoBehaviour
         }
     }
 
-    // CHECK OVERLAP LOSING REFERENCE !!!
     public virtual bool PlaceItem(InventoryGridItem item, Vector2Int itemPosition, ref InventoryGridItem overlapItem)
     {
         if (!CheckItemBoundary(itemPosition, item.itemData.size))
@@ -93,14 +92,12 @@ public class ItemGrid : MonoBehaviour
 
         if (!CheckOverlap(itemPosition, item.itemData.size, ref overlapItem))
         {
-            Debug.Log($"!CheckOverlap({itemPosition}{item.itemData.size}{overlapItem}) ITEM GRID");
             overlapItem = null;
             return false;
         }
 
         if (overlapItem != null)
         {
-            Debug.Log($"overlapItem != null >>> clear:  {overlapItem.itemData.name}) ITEM GRID");
             CleanGridReference(overlapItem);
         }
 
