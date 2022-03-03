@@ -6,6 +6,9 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
 {
     private const int fixedUpdateRate = 50;         // Value needed to correctly apply regeneration
 
+    [Header("Combat stats")]
+    [SerializeField] PlayerCombatStats combatStats;
+
     [Header("Bools")]
     [SerializeField] bool resetStats = false;
     [SerializeField] bool printPassvieNodesIds = false;
@@ -17,7 +20,17 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
     private int baseDexterity;
     [SerializeField]
     private Stat dexterity;
-    public Stat Dexterity { get; set; }
+    public Stat Dexterity
+    {
+        get => dexterity;
+        set
+        {
+            dexterity = value;
+            combatStats.AttackSpeed = new Stat(dexterity.CalculatedValue * AttackSpeedPerDexterity);
+            combatStats.Evasion = new Stat(dexterity.CalculatedValue * EvasionPerDexterity);
+            dexterityText.SetText($"{dexterity.CalculatedValue}");
+        }
+    }
     [SerializeField]
     private int attackSpeedPerDexteriry;
     public int AttackSpeedPerDexterity { get => attackSpeedPerDexteriry; }
@@ -30,20 +43,40 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
     private int baseIntelligence;
     [SerializeField]
     private Stat intelligence;
-    public Stat Intelligence { get; set; }
+    public Stat Intelligence
+    {
+        get => intelligence;
+        set
+        {
+            intelligence = value;
+            MaxMana = new Stat(MaxMana.BaseValue, intelligence.CalculatedValue * MaxManaPerIntelligence, MaxMana.ItemIncome, MaxMana.PercentIncome);
+            combatStats.SpellAmplifitacion = new Stat(intelligence.CalculatedValue * SpellAmplificationPerIntelligence);
+            intelligenceText.SetText($"{intelligence.CalculatedValue}");
+        }
+    }
     [SerializeField]
     private int maxManaPerIntelligence;
     public int MaxManaPerIntelligence { get => maxManaPerIntelligence; }
     [SerializeField]
-    private int magicalAttackDamagePerIntelligence;
-    public int MagicalAttackDamagePerIntelligence { get => MagicalAttackDamagePerIntelligence; }
+    private int spellAmplificationPerIntelligence;
+    public int SpellAmplificationPerIntelligence { get => spellAmplificationPerIntelligence; }
 
     [Header("Strength")]
     [SerializeField]
     private int baseStrength;
     [SerializeField]
     private Stat strength;
-    public Stat Strength { get; set; }
+    public Stat Strength
+    {
+        get => strength;
+        set
+        {
+            strength = value;
+            MaxHealth = new Stat(MaxHealth.BaseValue, strength.CalculatedValue * MaxHealthPerStrength, MaxHealth.ItemIncome, MaxHealth.PercentIncome);
+            combatStats.AdditiveDamage = new Stat(strength.CalculatedValue * PhysicalAttackDamagePerStrength);
+            strengthText.SetText($"{strength.CalculatedValue}");
+        }
+    }
     [SerializeField]
     private int maxHealthPerStrength;
     public int MaxHealthPerStrength { get => maxHealthPerStrength; }
@@ -57,29 +90,30 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
     //	ModifyPlayerStat(itemStat.Name, itemStat.Value);
     //}
 
-    //public void ModifyPlayerStat(string statName, int value)
-    //{
-    //	switch (statName)
-    //	{
-    //		case "Dexterity":
-    //			{
-    //				dexterity.BaseValue += value;
-    //				break;
-    //			}
-    //		case "Intelligence":
-    //			{
-    //				intelligence.BaseValue += value;
-    //				break;
-    //			}
-    //		case "Strength":
-    //			{
-    //				strength.BaseValue += value;
-    //				break;
-    //			}
-    //		default:
-    //			break;
-    //	}
-    //}
+    public void ModifyPlayerStat(string statName)
+    {
+        switch (statName)
+        {
+            case "Dexterity":
+                {
+                    Debug.Log("Plus 1 dex");
+                    Dexterity += new Stat(1);
+                    break;
+                }
+            case "Intelligence":
+                {
+                    Intelligence += new Stat(1);
+                    break;
+                }
+            case "Strength":
+                {
+                    Strength += new Stat(1);
+                    break;
+                }
+            default:
+                break;
+        }
+    }
 
     #endregion
 
@@ -101,8 +135,19 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
         get => maxHealth;
         set
         {
+            bool maxHp = false;
+            if (currentHealth == maxHealth.CalculatedValue)
+            {
+                maxHp = true;
+            }
             maxHealth = value;
             hpSlider.maxValue = MaxHealth.CalculatedValue;
+
+            if (maxHp)
+            {
+                currentHealth = maxHealth.CalculatedValue;
+                hpSlider.value = currentHealth;
+            }
         }
     }
 
@@ -148,8 +193,18 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
         get => maxMana;
         set
         {
+            bool maxMp = false;
+            if (currentMana == maxMana.CalculatedValue)
+            {
+                maxMp = true;
+            }
             maxMana = value;
-            mpSlider.maxValue = MaxMana.CalculatedValue;
+            mpSlider.maxValue = maxMana.CalculatedValue;
+            if (maxMp)
+            {
+                currentMana = maxMana.CalculatedValue;
+                mpSlider.value = currentMana;
+            }
         }
     }
     public float CurrentMana
@@ -300,7 +355,13 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
 
     [Header("Notifications")]
     [SerializeField]
-    private GameObject passivesButton;
+    private GameObject attributesButton;
+    [SerializeField]
+    private TMP_Text dexterityText;
+    [SerializeField]
+    private TMP_Text intelligenceText;
+    [SerializeField]
+    private TMP_Text strengthText;
 
     #endregion
 
@@ -313,7 +374,7 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
 
         currentExp -= expNeededToLevelUp;
         CalcNeededExperienceToLevelUp();
-        passivesButton.SetActive(true);
+        attributesButton.SetActive(true);
     }
 
     void UpdateHUD()
@@ -336,14 +397,20 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
         Intelligence = new Stat(baseIntelligence);
         Strength = new Stat(baseStrength);
 
+        dexterityText.SetText($"{Dexterity.CalculatedValue}");
+        intelligenceText.SetText($"{Intelligence.CalculatedValue}");
+        strengthText.SetText($"{Strength.CalculatedValue}");
+
         maxHealth.CalculateValue();
         hpSlider.minValue = 0;
-        hpSlider.maxValue = maxHealth.CalculatedValue;
+        hpSlider.maxValue = MaxHealth.CalculatedValue;
+        currentHealth = MaxHealth.CalculatedValue;
         hpSlider.value = currentHealth;
 
         maxMana.CalculateValue();
         mpSlider.minValue = 0;
         mpSlider.maxValue = MaxMana.CalculatedValue;
+        currentMana = MaxMana.CalculatedValue;
         mpSlider.value = currentMana;
 
         CalcNeededExperienceToLevelUp();

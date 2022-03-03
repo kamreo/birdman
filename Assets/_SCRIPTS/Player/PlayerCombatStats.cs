@@ -40,6 +40,14 @@ public class PlayerCombatStats : MonoBehaviour, ICombatStats, ICombatMethods
     }
 
     [SerializeField]
+    private Stat additiveDamage;
+    public Stat AdditiveDamage
+    {
+        get => additiveDamage;
+        set => additiveDamage = value;
+    }
+
+    [SerializeField]
     private Stat attackSpeed;
     public Stat AttackSpeed { get => attackSpeed; set => attackSpeed = value; }
 
@@ -50,6 +58,11 @@ public class PlayerCombatStats : MonoBehaviour, ICombatStats, ICombatMethods
     [SerializeField]
     private Stat critMultiplier;
     public Stat CritMultiplier { get => critMultiplier; set => critMultiplier = value; }
+
+    [Header("Magic")]
+    [SerializeField]
+    private Stat spellAmplification;
+    public Stat SpellAmplifitacion { get => spellAmplification; set => spellAmplification = value; }
 
     [Header("Defense")]
     [SerializeField]
