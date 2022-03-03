@@ -4,7 +4,6 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(ItemGrid))]
 public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField]
     private InventoryController inventoryController;
     private ItemGrid itemGrid;
 
@@ -21,8 +20,7 @@ public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     private void Awake()
     {
-        if (inventoryController == null)
-            inventoryController = FindObjectOfType<InventoryController>();
+        inventoryController = FindObjectOfType<InventoryController>();
 
         itemGrid = GetComponent<ItemGrid>();
     }

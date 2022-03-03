@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryController : MonoBehaviour
@@ -41,12 +40,12 @@ public class InventoryController : MonoBehaviour
 
     RectTransform rectTransform;
 
-    [SerializeField]
-    List<ItemData> items;
+    //[SerializeField]
+    //List<ItemData> items;
     [SerializeField]
     GameObject itemPrefab;
-    [SerializeField]
-    Transform canvasTransform;
+    //[SerializeField]
+    //Transform canvasTransform;
 
     [SerializeField]
     private GameObject onDropPrefabItem;
@@ -67,16 +66,16 @@ public class InventoryController : MonoBehaviour
         ItemIconDrag();
 
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            CreateRandomItem();
-        }
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //{
+        //    CreateRandomItem();
+        //}
 
 
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            InsertRandomItem();
-        }
+        //if (Input.GetKeyDown(KeyCode.V))
+        //{
+        //    InsertRandomItem();
+        //}
 
         // Throw away
         if (selectedItemGrid == null)
@@ -111,13 +110,13 @@ public class InventoryController : MonoBehaviour
         return true;
     }
 
-    private void InsertRandomItem()
-    {
-        CreateRandomItem();
-        InventoryGridItem item = selectedItem;
-        selectedItem = null;
-        InsertItemToInventory(item);
-    }
+    //private void InsertRandomItem()
+    //{
+    //    CreateRandomItem();
+    //    InventoryGridItem item = selectedItem;
+    //    selectedItem = null;
+    //    InsertItemToInventory(item);
+    //}
 
     Vector2Int oldPosition;
     InventoryGridItem itemToHighlight;
@@ -206,17 +205,17 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    private void CreateRandomItem()
-    {
-        InventoryGridItem inventoryGridItem = Instantiate(itemPrefab).GetComponent<InventoryGridItem>();
-        selectedItem = inventoryGridItem;
+    //private void CreateRandomItem()
+    //{
+    //    InventoryGridItem inventoryGridItem = Instantiate(itemPrefab).GetComponent<InventoryGridItem>();
+    //    selectedItem = inventoryGridItem;
 
-        rectTransform = inventoryGridItem.GetComponent<RectTransform>();
-        rectTransform.SetParent(canvasTransform);
+    //    rectTransform = inventoryGridItem.GetComponent<RectTransform>();
+    //    rectTransform.SetParent(canvasTransform);
 
-        int selectedItemId = Random.Range(0, items.Count);
-        inventoryGridItem.SetItemData(items[selectedItemId]);
-    }
+    //    int selectedItemId = Random.Range(0, items.Count);
+    //    inventoryGridItem.SetItemData(items[selectedItemId]);
+    //}
 
     public void CreateItemOnItemFrameClicked(ItemData itemData, Transform parent)
     {

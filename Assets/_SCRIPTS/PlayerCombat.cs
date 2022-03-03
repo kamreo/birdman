@@ -11,7 +11,7 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] Slider BowPowerSlider;
     [SerializeField] Transform Bow;
 
-    [Range(0,10)]
+    [Range(0, 10)]
     [SerializeField] float BowPower;
 
     [Range(0, 3)]

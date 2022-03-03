@@ -6,8 +6,7 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
 {
     private const int fixedUpdateRate = 50;         // Value needed to correctly apply regeneration
 
-    [Header("Combat stats")]
-    [SerializeField] PlayerCombatStats combatStats;
+    PlayerCombatStats combatStats;
 
     [Header("Bools")]
     [SerializeField] bool resetStats = false;
@@ -496,6 +495,8 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
 
     void Start()
     {
+        combatStats = transform.parent.GetComponentInChildren<PlayerCombatStats>();
+
         // Finds sceneChanger if loses reference
         //if (sceneChanger != null)
         //{

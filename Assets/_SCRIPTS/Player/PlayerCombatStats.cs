@@ -89,7 +89,7 @@ public class PlayerCombatStats : MonoBehaviour, ICombatStats, ICombatMethods
 
     public void TakeDamage(float damageTaken)
     {
-        throw new System.NotImplementedException();
+        Debug.Log($"Taking {damageTaken} damage!");
     }
 
     public void TakeDamage(float minVal, float maxVal)
