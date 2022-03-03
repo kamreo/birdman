@@ -5,7 +5,6 @@ public class EnemyCombat : MonoBehaviour
 {
 	public Animator animator;
 
-	public Transform enemyGFX;
 	public Transform attackPoint;
 	public float startAttackRange = 1f;
 	public float hitRange = 1f;
