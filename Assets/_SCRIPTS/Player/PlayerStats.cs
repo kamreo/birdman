@@ -92,6 +92,12 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
 
     public void ModifyPlayerStat(string statName)
     {
+        if (attributesPoints <= 0)
+        {
+            Debug.LogWarning("THERE IS 0 ATTRIBUTES POINTS LEFT!!!");
+            return;
+        }
+
         switch (statName)
         {
             case "Dexterity":
@@ -111,7 +117,23 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
                     break;
                 }
             default:
-                break;
+                {
+                    Debug.LogError($"Stat name:{statName} not found!!!!");
+                    break;
+                }
+        }
+
+        attributesPoints--;
+        attributesPointsText.SetText($"{attributesPoints}");
+
+        if (attributesPoints <= 0)
+        {
+            attributesPanelButton.SetActive(false);
+
+            foreach (var button in attributesButtons)
+            {
+                button.SetActive(false);
+            }
         }
     }
 
@@ -251,8 +273,8 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
     [SerializeField] int spellPoints = 1;
     [SerializeField] TMP_Text spellPointsText;
     [Space]
-    [SerializeField] int passivePoints = 1;
-    [SerializeField] TMP_Text passivePointsText;
+    [SerializeField] int attributesPoints = 1;
+    [SerializeField] TMP_Text attributesPointsText;
 
     public int CurrentExp
     {
@@ -306,14 +328,14 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
 
     public int PassivePoints
     {
-        get => passivePoints;
+        get => attributesPoints;
         set
         {
             if (value >= 0)
             {
-                passivePoints = value;
-                if (passivePointsText != null)
-                    passivePointsText.text = passivePoints.ToString();
+                attributesPoints = value;
+                if (attributesPointsText != null)
+                    attributesPointsText.text = attributesPoints.ToString();
             }
         }
     }
@@ -353,15 +375,18 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
 
     #region Notifications
 
-    [Header("Notifications")]
+    [Header("AttributesPanel")]
     [SerializeField]
-    private GameObject attributesButton;
+    private GameObject attributesPanelButton;
     [SerializeField]
     private TMP_Text dexterityText;
     [SerializeField]
     private TMP_Text intelligenceText;
     [SerializeField]
     private TMP_Text strengthText;
+
+    [SerializeField]
+    private GameObject[] attributesButtons;
 
     #endregion
 
@@ -374,7 +399,7 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
 
         currentExp -= expNeededToLevelUp;
         CalcNeededExperienceToLevelUp();
-        attributesButton.SetActive(true);
+        attributesPanelButton.SetActive(true);
     }
 
     void UpdateHUD()
@@ -387,8 +412,8 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
         if (spellPointsText != null)
             spellPointsText.text = spellPoints.ToString();
 
-        if (passivePointsText != null)
-            passivePointsText.text = passivePoints.ToString();
+        if (attributesPointsText != null)
+            attributesPointsText.text = attributesPoints.ToString();
     }
 
     public void SetUp()
@@ -421,8 +446,8 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
         levelText.text = level.ToString();
         if (spellPointsText != null)
             spellPointsText.text = spellPoints.ToString();
-        if (passivePointsText != null)
-            passivePointsText.text = passivePoints.ToString();
+        if (attributesPointsText != null)
+            attributesPointsText.text = attributesPoints.ToString();
 
         //spriteMaterial.SetColor("_Tint", currentTint);
     }
@@ -509,8 +534,8 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
         if (spellPointsText == null)
             spellPointsText = FindTextObjectByName("LeftSpellPointsText");
 
-        if (passivePointsText == null)
-            passivePointsText = FindTextObjectByName("LeftPassivePointsText");
+        if (attributesPointsText == null)
+            attributesPointsText = FindTextObjectByName("LeftAttributesPointsText");
 
 
         if (resetStats)
