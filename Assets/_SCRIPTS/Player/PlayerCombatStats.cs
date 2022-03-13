@@ -1,7 +1,25 @@
+using System.Reflection;
 using UnityEngine;
 
 public class PlayerCombatStats : MonoBehaviour, ICombatStats, ICombatMethods
 {
+    AttributesHudHandler attributesHudHandler;
+
+    private void Start()
+    {
+        attributesHudHandler = transform.parent.GetComponentInChildren<AttributesHudHandler>();
+
+        attributesHudHandler.ChangeAttributeValueText("MinDamage", minDamage.CalculatedValue);
+        attributesHudHandler.ChangeAttributeValueText("MaxDamage", maxDamage.CalculatedValue);
+        attributesHudHandler.ChangeAttributeValueText("Armor", armor.CalculatedValue);
+        attributesHudHandler.ChangeAttributeValueText("MagicDefense", magicDefense.CalculatedValue);
+        attributesHudHandler.ChangeAttributeValueText("Evasion", evasion.CalculatedValue);
+        attributesHudHandler.ChangeAttributeValueText("SpellAmplification", spellAmplification.CalculatedValue);
+        attributesHudHandler.ChangeAttributeValueText("AttackSpeed", attackSpeed.CalculatedValue);
+        attributesHudHandler.ChangeAttributeValueText("CritChance", critChance.CalculatedValue);
+        attributesHudHandler.ChangeAttributeValueText("CritMultiplier", critMultiplier.CalculatedValue);
+    }
+
     [Header("Attack")]
     [SerializeField]
     private Stat minDamage;
@@ -10,14 +28,10 @@ public class PlayerCombatStats : MonoBehaviour, ICombatStats, ICombatMethods
         get => minDamage;
         set
         {
-            if (value.CalculatedValue >= MaxDamage.CalculatedValue)
-            {
-                minDamage.CalculatedValue = MaxDamage.CalculatedValue;
-            }
-            else
-            {
-                minDamage = value;
-            }
+            minDamage = value;
+
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, minDamage.CalculatedValue);
         }
     }
 
@@ -28,14 +42,10 @@ public class PlayerCombatStats : MonoBehaviour, ICombatStats, ICombatMethods
         get => maxDamage;
         set
         {
-            if (value.CalculatedValue <= MinDamage.CalculatedValue)
-            {
-                maxDamage.CalculatedValue = MinDamage.CalculatedValue;
-            }
-            else
-            {
-                maxDamage = value;
-            }
+            maxDamage = value;
+
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, maxDamage.CalculatedValue);
         }
     }
 
@@ -49,33 +59,96 @@ public class PlayerCombatStats : MonoBehaviour, ICombatStats, ICombatMethods
 
     [SerializeField]
     private Stat attackSpeed;
-    public Stat AttackSpeed { get => attackSpeed; set => attackSpeed = value; }
+    public Stat AttackSpeed
+    {
+        get => attackSpeed;
+        set
+        {
+            attackSpeed = value;
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, attackSpeed.CalculatedValue);
+        }
+    }
 
     [SerializeField]
     private Stat critChance;
-    public Stat CritChance { get => critChance; set => critChance = value; }
+    public Stat CritChance
+    {
+        get => critChance;
+        set
+        {
+            critChance = value;
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, critChance.CalculatedValue);
+        }
+    }
 
     [SerializeField]
     private Stat critMultiplier;
-    public Stat CritMultiplier { get => critMultiplier; set => critMultiplier = value; }
+    public Stat CritMultiplier
+    {
+        get => critMultiplier;
+        set
+        {
+            critMultiplier = value;
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, critChance.CalculatedValue);
+        }
+    }
 
     [Header("Magic")]
     [SerializeField]
     private Stat spellAmplification;
-    public Stat SpellAmplifitacion { get => spellAmplification; set => spellAmplification = value; }
+    public Stat SpellAmplification
+    {
+        get => spellAmplification;
+        set
+        {
+            spellAmplification = value;
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, spellAmplification.CalculatedValue);
+        }
+    }
 
     [Header("Defense")]
     [SerializeField]
     private Stat armor;
-    public Stat Armor { get => armor; set => armor = value; }
+    public Stat Armor
+    {
+        get => armor;
+        set
+        {
+            armor = value;
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, armor.CalculatedValue);
+        }
+    }
 
     [SerializeField]
     private Stat magicDefense;
-    public Stat MagicDefense { get => magicDefense; set => magicDefense = value; }
+    public Stat MagicDefense
+    {
+        get => magicDefense;
+        set
+        {
+            magicDefense = value;
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, magicDefense.CalculatedValue);
+        }
+    }
 
     [SerializeField]
     private Stat evasion;
-    public Stat Evasion { get => evasion; set => evasion = value; }
+    public Stat Evasion
+    {
+        get => evasion;
+        set
+        {
+            evasion = value;
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, evasion.CalculatedValue);
+        }
+    }
 
     [Header("Blocking")]
     [SerializeField]

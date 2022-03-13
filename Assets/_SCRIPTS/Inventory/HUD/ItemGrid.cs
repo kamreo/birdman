@@ -124,7 +124,12 @@ public class ItemGrid : MonoBehaviour
 
         rectTransform.localPosition = position;
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="itemPosition"></param>
+    /// <returns></returns>
     public virtual Vector2 CalculatePositionOnGrid(InventoryGridItem item, Vector2Int itemPosition)
     {
         Vector2 position = new Vector2();

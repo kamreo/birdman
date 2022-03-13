@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Reflection;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,10 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
     private const int fixedUpdateRate = 50;         // Value needed to correctly apply regeneration
 
     PlayerCombatStats combatStats;
+    AttributesHudHandler attributesHudHandler;
+
+    [Header("General")]
+    [SerializeField] string playerName;
 
     [Header("Bools")]
     [SerializeField] bool resetStats = false;
@@ -27,7 +32,8 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
             dexterity = value;
             combatStats.AttackSpeed = new Stat(dexterity.CalculatedValue * AttackSpeedPerDexterity);
             combatStats.Evasion = new Stat(dexterity.CalculatedValue * EvasionPerDexterity);
-            dexterityText.SetText($"{dexterity.CalculatedValue}");
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, dexterity.CalculatedValue);
         }
     }
     [SerializeField]
@@ -49,8 +55,9 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
         {
             intelligence = value;
             MaxMana = new Stat(MaxMana.BaseValue, intelligence.CalculatedValue * MaxManaPerIntelligence, MaxMana.ItemIncome, MaxMana.PercentIncome);
-            combatStats.SpellAmplifitacion = new Stat(intelligence.CalculatedValue * SpellAmplificationPerIntelligence);
-            intelligenceText.SetText($"{intelligence.CalculatedValue}");
+            combatStats.SpellAmplification = new Stat(intelligence.CalculatedValue * SpellAmplificationPerIntelligence);
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, intelligence.CalculatedValue);
         }
     }
     [SerializeField]
@@ -73,7 +80,8 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
             strength = value;
             MaxHealth = new Stat(MaxHealth.BaseValue, strength.CalculatedValue * MaxHealthPerStrength, MaxHealth.ItemIncome, MaxHealth.PercentIncome);
             combatStats.AdditiveDamage = new Stat(strength.CalculatedValue * PhysicalAttackDamagePerStrength);
-            strengthText.SetText($"{strength.CalculatedValue}");
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, strength.CalculatedValue);
         }
     }
     [SerializeField]
@@ -169,6 +177,9 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
                 currentHealth = maxHealth.CalculatedValue;
                 hpSlider.value = currentHealth;
             }
+
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, maxHealth.CalculatedValue);
         }
     }
 
@@ -185,6 +196,8 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
             {
                 currentHealth = MaxHealth.CalculatedValue;
             }
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, currentHealth);
         }
     }
 
@@ -226,6 +239,8 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
                 currentMana = maxMana.CalculatedValue;
                 mpSlider.value = currentMana;
             }
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, maxMana.CalculatedValue);
         }
     }
     public float CurrentMana
@@ -246,6 +261,9 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
             {
                 currentMana = MaxMana.CalculatedValue;
             }
+
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, currentMana);
         }
     }
 
@@ -261,10 +279,10 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
     [Header("Experience")]
 
     // Available in Unity
-    [SerializeField] Slider expSlider;
+    [SerializeField] Slider experienceSlider;
     [Space]
-    [SerializeField] int expNeededToLevelUp = 600;
-    [SerializeField] int currentExp = 0;
+    [SerializeField] int experienceNeededToLevelUp = 600;
+    [SerializeField] int currentExperience = 0;
     [Space]
     [SerializeField] int level = 1;
     [SerializeField] TMP_Text levelText;
@@ -275,26 +293,30 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
     [SerializeField] int attributesPoints = 1;
     [SerializeField] TMP_Text attributesPointsText;
 
-    public int CurrentExp
+    public int CurrentExperience
     {
-        get => currentExp;
+        get => currentExperience;
         set
         {
             if (value > 0)
             {
-                currentExp = value;
+                currentExperience = value;
             }
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, currentExperience);
         }
     }
-    public int ExpNeededToLevelUp
+    public int ExperienceNeededToLevelUp
     {
-        get => expNeededToLevelUp;
+        get => experienceNeededToLevelUp;
         set
         {
             if (value > 0)
             {
-                expNeededToLevelUp = value;
+                experienceNeededToLevelUp = value;
             }
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, experienceNeededToLevelUp);
         }
     }
 
@@ -308,6 +330,8 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
                 level = value;
                 levelText.text = spellPoints.ToString();
             }
+            var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+            attributesHudHandler.ChangeAttributeValueText(propName, level);
         }
     }
 
@@ -325,7 +349,7 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
         }
     }
 
-    public int PassivePoints
+    public int AttributesPoints
     {
         get => attributesPoints;
         set
@@ -333,8 +357,8 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
             if (value >= 0)
             {
                 attributesPoints = value;
-                if (attributesPointsText != null)
-                    attributesPointsText.text = attributesPoints.ToString();
+                var propName = MethodBase.GetCurrentMethod().Name.Substring(4);
+                attributesHudHandler.ChangeAttributeValueText(propName, attributesPoints);
             }
         }
     }
@@ -352,7 +376,7 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
         float c = 485;      // a+b+c = exp needed to level up at 1 level
 
         // The basic quadratic function to calc
-        expNeededToLevelUp = (int)Mathf.Floor(a * Level * Level + b * Level + c);
+        experienceNeededToLevelUp = (int)Mathf.Floor(a * Level * Level + b * Level + c);
     }
 
     #endregion
@@ -394,16 +418,16 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
     {
         Level++;
         SpellPoints++;
-        PassivePoints += 3;
+        AttributesPoints += 3;
 
-        currentExp -= expNeededToLevelUp;
+        currentExperience -= experienceNeededToLevelUp;
         CalcNeededExperienceToLevelUp();
         attributesPanelButton.SetActive(true);
     }
 
     void UpdateHUD()
     {
-        expSlider.maxValue = expNeededToLevelUp;
+        experienceSlider.maxValue = experienceNeededToLevelUp;
         hpSlider.maxValue = MaxHealth.CalculatedValue;
         mpSlider.maxValue = MaxMana.CalculatedValue;
         levelText.text = level.ToString();
@@ -425,22 +449,24 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
         intelligenceText.SetText($"{Intelligence.CalculatedValue}");
         strengthText.SetText($"{Strength.CalculatedValue}");
 
-        maxHealth.CalculateValue();
+        //maxHealth.CalculateValue();
+        MaxHealth = new Stat(maxHealth);
         hpSlider.minValue = 0;
         hpSlider.maxValue = MaxHealth.CalculatedValue;
         currentHealth = MaxHealth.CalculatedValue;
         hpSlider.value = currentHealth;
 
-        maxMana.CalculateValue();
+        //maxMana.CalculateValue();
+        MaxMana = new Stat(maxMana);
         mpSlider.minValue = 0;
         mpSlider.maxValue = MaxMana.CalculatedValue;
         currentMana = MaxMana.CalculatedValue;
         mpSlider.value = currentMana;
 
         CalcNeededExperienceToLevelUp();
-        expSlider.minValue = 0;
-        expSlider.maxValue = expNeededToLevelUp;
-        expSlider.value = currentExp;
+        experienceSlider.minValue = 0;
+        experienceSlider.maxValue = experienceNeededToLevelUp;
+        experienceSlider.value = currentExperience;
 
         levelText.text = level.ToString();
         if (spellPointsText != null)
@@ -463,7 +489,7 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
         Strength = new Stat(Strength.BaseValue);
 
         //PassiveIds = new List<int>();
-        PassivePoints = Level;
+        AttributesPoints = Level;
     }
 
     //public void PrintPickedNodes()
@@ -496,6 +522,17 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
     void Start()
     {
         combatStats = transform.parent.GetComponentInChildren<PlayerCombatStats>();
+        attributesHudHandler = transform.parent.GetComponentInChildren<AttributesHudHandler>();
+
+        attributesHudHandler.ChangeAttributeValueText("Name", playerName);
+        attributesHudHandler.ChangeAttributeValueText("Level", level);
+        attributesHudHandler.ChangeAttributeValueText("CurrentExperience", currentExperience);
+        attributesHudHandler.ChangeAttributeValueText("ExperienceNeededToLevelUp", experienceNeededToLevelUp);
+        attributesHudHandler.ChangeAttributeValueText("Dexterity", dexterity.CalculatedValue);
+        attributesHudHandler.ChangeAttributeValueText("Intelligence", intelligence.CalculatedValue);
+        attributesHudHandler.ChangeAttributeValueText("Strength", strength.CalculatedValue);
+        attributesHudHandler.ChangeAttributeValueText("LeftAttributes", AttributesPoints);
+
 
         // Finds sceneChanger if loses reference
         //if (sceneChanger != null)
@@ -511,7 +548,7 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
     {
         hpSlider.value = currentHealth;
         mpSlider.value = currentMana;
-        expSlider.value = currentExp;
+        experienceSlider.value = currentExperience;
 
         // Changes hero material back to normal color through time
         //if (currentTint.a > 0)
@@ -521,7 +558,7 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
         //}
 
         // Check if can level up
-        if (currentExp >= expNeededToLevelUp)
+        if (CurrentExperience >= ExperienceNeededToLevelUp)
         {
             LevelUpPlayer();
         }
@@ -550,9 +587,6 @@ public class PlayerStats : MonoBehaviour, IBaseStats, IPlayerStats
             //PrintPickedNodes();
             printPassvieNodesIds = false;
         }
-
-
-
     }
 
     private void FixedUpdate()

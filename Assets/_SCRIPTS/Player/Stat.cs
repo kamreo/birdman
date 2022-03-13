@@ -41,11 +41,8 @@ public class Stat
         get => itemIncome;
         set
         {
-            if (value >= 0)
-            {
-                itemIncome = value;
-                CalculateValue();
-            }
+            itemIncome = value;
+            CalculateValue();
         }
     }
     public int PercentIncome
